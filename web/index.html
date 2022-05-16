@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new GitHub web blog designed myself with the Flutter.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="github_blog">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>github_blog</title>
+  <link rel="manifest" href="manifest.json">
+
+  <script src="js/fullScreen.js" type="text/javascript"></script>
+
+  <style>
+    html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  background: #2E2E48;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader {
+  position: relative;
+  width: 75px;
+  height: 100px;
+}
+
+.loader__bar {
+  position: absolute;
+  bottom: 0;
+  width: 10px;
+  height: 50%;
+  background: #fff;
+  transform-origin: center bottom;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.loader__bar:nth-child(1) {
+  left: 0px;
+  transform: scale(1, 0.2);
+  animation: barUp1 4s infinite;
+}
+
+.loader__bar:nth-child(2) {
+  left: 15px;
+  transform: scale(1, 0.4);
+  animation: barUp2 4s infinite;
+}
+
+.loader__bar:nth-child(3) {
+  left: 30px;
+  transform: scale(1, 0.6);
+  animation: barUp3 4s infinite;
+}
+
+.loader__bar:nth-child(4) {
+  left: 45px;
+  transform: scale(1, 0.8);
+  animation: barUp4 4s infinite;
+}
+
+.loader__bar:nth-child(5) {
+  left: 60px;
+  transform: scale(1, 1);
+  animation: barUp5 4s infinite;
+}
+
+.loader__ball {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-radius: 50%;
+  animation: ball 4s infinite;
+}
+
+@keyframes ball {
+  0% {
+    transform: translate(0, 0);
+  }
+  5% {
+    transform: translate(8px, -14px);
+  }
+  10% {
+    transform: translate(15px, -10px);
+  }
+  17% {
+    transform: translate(23px, -24px);
+  }
+  20% {
+    transform: translate(30px, -20px);
+  }
+  27% {
+    transform: translate(38px, -34px);
+  }
+  30% {
+    transform: translate(45px, -30px);
+  }
+  37% {
+    transform: translate(53px, -44px);
+  }
+  40% {
+    transform: translate(60px, -40px);
+  }
+  50% {
+    transform: translate(60px, 0);
+  }
+  57% {
+    transform: translate(53px, -14px);
+  }
+  60% {
+    transform: translate(45px, -10px);
+  }
+  67% {
+    transform: translate(37px, -24px);
+  }
+  70% {
+    transform: translate(30px, -20px);
+  }
+  77% {
+    transform: translate(22px, -34px);
+  }
+  80% {
+    transform: translate(15px, -30px);
+  }
+  87% {
+    transform: translate(7px, -44px);
+  }
+  90% {
+    transform: translate(0, -40px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes barUp1 {
+  0% {
+    transform: scale(1, 0.2);
+  }
+  40% {
+    transform: scale(1, 0.2);
+  }
+  50% {
+    transform: scale(1, 1);
+  }
+  90% {
+    transform: scale(1, 1);
+  }
+  100% {
+    transform: scale(1, 0.2);
+  }
+}
+
+@keyframes barUp2 {
+  0% {
+    transform: scale(1, 0.4);
+  }
+  40% {
+    transform: scale(1, 0.4);
+  }
+  50% {
+    transform: scale(1, 0.8);
+  }
+  90% {
+    transform: scale(1, 0.8);
+  }
+  100% {
+    transform: scale(1, 0.4);
+  }
+}
+
+@keyframes barUp3 {
+  0% {
+    transform: scale(1, 0.6);
+  }
+  100% {
+    transform: scale(1, 0.6);
+  }
+}
+
+@keyframes barUp4 {
+  0% {
+    transform: scale(1, 0.8);
+  }
+  40% {
+    transform: scale(1, 0.8);
+  }
+  50% {
+    transform: scale(1, 0.4);
+  }
+  90% {
+    transform: scale(1, 0.4);
+  }
+  100% {
+    transform: scale(1, 0.8);
+  }
+}
+
+@keyframes barUp5 {
+  0% {
+    transform: scale(1, 1);
+  }
+  40% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1, 0.2);
+  }
+  90% {
+    transform: scale(1, 0.2);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+  </style>
+
+</head>
+<body>
+<div class="loader">
+  <div class="loader__bar"></div>
+  <div class="loader__bar"></div>
+  <div class="loader__bar"></div>
+  <div class="loader__bar"></div>
+  <div class="loader__bar"></div>
+  <div class="loader__ball"></div>
+</div>
+  <!-- This script installs service_worker.js to provide PWA functionality to
+       application. For more information, see:
+       https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <script>
+    var serviceWorkerVersion = null;
+    var scriptLoaded = false;
+    function loadMainDartJs() {
+      if (scriptLoaded) {
+        return;
+      }
+      scriptLoaded = true;
+      var scriptTag = document.createElement('script');
+      scriptTag.src = 'main.dart.js';
+      scriptTag.type = 'application/javascript';
+      document.body.append(scriptTag);
+    }
+
+    if ('serviceWorker' in navigator) {
+      // Service workers are supported. Use them.
+      window.addEventListener('load', function () {
+        // Wait for registration to finish before dropping the <script> tag.
+        // Otherwise, the browser will load the script multiple times,
+        // potentially different versions.
+        var serviceWorkerUrl = 'flutter_service_worker.js?v=' + serviceWorkerVersion;
+        navigator.serviceWorker.register(serviceWorkerUrl)
+          .then((reg) => {
+            function waitForActivation(serviceWorker) {
+              serviceWorker.addEventListener('statechange', () => {
+                if (serviceWorker.state == 'activated') {
+                  console.log('Installed new service worker.');
+                  loadMainDartJs();
+                }
+              });
+            }
+            if (!reg.active && (reg.installing || reg.waiting)) {
+              // No active web worker and we have installed or are installing
+              // one for the first time. Simply wait for it to activate.
+              waitForActivation(reg.installing || reg.waiting);
+            } else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
+              // When the app updates the serviceWorkerVersion changes, so we
+              // need to ask the service worker to update.
+              console.log('New service worker available.');
+              reg.update();
+              waitForActivation(reg.installing);
+            } else {
+              // Existing service worker is still good.
+              console.log('Loading app from service worker.');
+              loadMainDartJs();
+            }
+          });
+
+        // If service worker doesn't succeed in a reasonable amount of time,
+        // fallback to plaint <script> tag.
+        setTimeout(() => {
+          if (!scriptLoaded) {
+            console.warn(
+              'Failed to load app from service worker. Falling back to plain <script> tag.',
+            );
+            loadMainDartJs();
+          }
+        }, 4000);
+      });
+    } else {
+      // Service workers not supported. Just drop the <script> tag.
+      loadMainDartJs();
+    }
+  </script>
+</body>
+</html>
