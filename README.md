@@ -4,8 +4,6 @@
 
 ![PC端画面](https://img-blog.csdnimg.cn/b93090d4a9684d7dbedb54496f76bf67.png#pic_center)
 
-
-
 ## 版本环境
 
 #### 框架
@@ -20,15 +18,11 @@ Dart：2.16.2
 
 Android Studio
 
-
-
 ## 下载
 
 GitHub：[shAdow-XJY/github_blog: the source code of the github.io](https://github.com/shAdow-XJY/github_blog)
 
 Gitee：[github_blog: github page——博客源码工程 框架：flutter (gitee.com)](https://gitee.com/shAdowPlusing/github_blog)
-
-
 
 #### 使用
 
@@ -36,23 +30,21 @@ Gitee：[github_blog: github page——博客源码工程 框架：flutter (gite
 
 2. 可能会有 <u>***Cannot run with sound null safety ***</u>报错。使用run命令时，添加额外命令--no-sound-null-safety 即可。Android Studio可添加额外参数，不用每一次手动添加——[关于Flutter报Cannot run with sound null safety的解决方法 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/405838959)
 
-
-
 ## 自定义内容更新
 
 ##### 目前文件格式有限制,原因是代码里加载文件代码写死了，后续有机会的话会进一步优化。
 
-#### Write 模块更新
+### Write 模块更新
 
 在<mark>assets/write/</mark>路径下，创建一个自定义名字的<mark>文件夹（如Flutter）</mark>，在文件夹里面可以添加自己的.md文件（如Flutter.md）。
 
 在pubspec.yaml的assets：添加<mark> - assets/write/Flutter/</mark>
 
-#### Program 模块更新
+### Program 模块更新
 
 在<mark>assets/program/</mark>路径下，添加自己的.md文件（如Program.md）即可。
 
-## Video 模块更新
+### Video 模块更新
 
 #### 视频封面
 
@@ -80,8 +72,6 @@ Gitee：[github_blog: github page——博客源码工程 框架：flutter (gite
 > > 
 > > 参数即为src=""内容https://www.youtube.com/embed/ZI-GnWGzAMo
 
-
-
 ## 运行/打包前资源刷新
 
 #### 如果有进行上面的自定义内容更改，需要进行资源文件的更新才能运行正常。
@@ -101,5 +91,3 @@ Gitee：[github_blog: github page——博客源码工程 框架：flutter (gite
 > 3. 再在cmd上运行<u>*runcmd with pip.txt *</u>里面的python命令。
 >    
 >    > 其中的<mark>--output-file=</mark>可根据自己的路径修改。
-
-
