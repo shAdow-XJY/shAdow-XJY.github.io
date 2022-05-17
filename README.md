@@ -36,7 +36,9 @@ Gitee：[github_blog: github page——博客源码工程 框架：flutter (gite
 
 ### Write 模块更新
 
-在<mark>assets/write/</mark>路径下，创建一个自定义名字的<mark>文件夹（如Flutter）</mark>，在文件夹里面可以添加自己的.md文件（如Flutter.md）。
+在<mark>assets/write/</mark>路径下，创建一个自定义名字的<mark>文件夹（如Flutter）</mark>，在文件夹里面可以添加自己的.md文件（如Flutter.md、Flutter123.md）。
+
+在<mark>assets/icon/write/</mark>路径下添加文件夹同名的图标.png图片。
 
 在pubspec.yaml的assets：添加<mark> - assets/write/Flutter/</mark>
 

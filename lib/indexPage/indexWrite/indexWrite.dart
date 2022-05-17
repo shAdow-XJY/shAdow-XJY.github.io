@@ -25,7 +25,6 @@ class _IndexWriteState extends State<IndexWrite> {
   String _selectedCategory = '';
   String _selectedTitle = '';
 
-  String markdownSource = '';
 
   void oneLevelInit(List<String> titles) {
     for (var element in titles) {
@@ -56,19 +55,6 @@ class _IndexWriteState extends State<IndexWrite> {
             });
   }
 
-  void markDownInit(String selectCategory, String selectTitle) {
-    print(selectTitle);
-    rootBundle
-        .loadString('assets/write/$selectCategory/$selectTitle')
-        .then((value) => {
-              //print(value),
-              //print(markdownSource),
-              markdownSource = value,
-              setState(() {
-                markdownSource;
-              })
-            });
-  }
 
   @override
   void initState() {
@@ -113,7 +99,6 @@ class _IndexWriteState extends State<IndexWrite> {
                           _selectedTitle = selectedTitle;
                           _twoLevel = false;
                           _thrLevel = true;
-                          markDownInit(_selectedCategory, _selectedTitle);
                           setState(() {
                             _thrLevel;
                           });
@@ -125,7 +110,7 @@ class _IndexWriteState extends State<IndexWrite> {
                       child: MdWidget(
                           title: _selectedTitle.substring(
                               0, _selectedTitle.lastIndexOf('.')),
-                          sourceData: markdownSource),
+                      path: 'assets/write/$_selectedCategory/$_selectedTitle',),
                     ),
               Positioned(
                   bottom: 10.0,

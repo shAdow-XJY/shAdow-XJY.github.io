@@ -14,7 +14,6 @@ class IndexProgram extends StatefulWidget {
 class _IndexProgramState extends State<IndexProgram> {
   List<Map<String, String>> oneLevelObj = [];
   List<String> oneLevelTitles = [];
-  String markdownSource = '';
 
   bool _oneLevel = true;
   String _selectedTitle = '';
@@ -30,14 +29,6 @@ class _IndexProgramState extends State<IndexProgram> {
     });
   }
 
-  void markDownInit(String selectTitle) {
-    rootBundle.loadString('assets/program/$selectTitle').then((value) => {
-          markdownSource = value,
-          setState(() {
-            markdownSource;
-          })
-        });
-  }
 
   @override
   void initState() {
@@ -63,7 +54,6 @@ class _IndexProgramState extends State<IndexProgram> {
               if (selectedTitle != 'default') {
                 _oneLevel = false;
                 _selectedTitle = selectedTitle;
-                markDownInit(_selectedTitle);
                 setState(() {
                   _oneLevel;
                 });
@@ -77,7 +67,7 @@ class _IndexProgramState extends State<IndexProgram> {
                 child: MdWidget(
                     title: _selectedTitle.substring(
                         0, _selectedTitle.lastIndexOf('.')),
-                    sourceData: markdownSource),
+                path: 'assets/program/$_selectedTitle',),
               ),
               Positioned(
                   bottom: 10.0,

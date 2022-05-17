@@ -37,6 +37,7 @@ dependencies:
   sidebarx: ^0.2.2
   url_launcher: ^6.1.0
   flutter_markdown: ^0.6.10
+  markdown: ^5.0.0
   assets_audio_player: ^3.0.4+1
   video_player: ^2.4.0
   js: ^0.6.3
@@ -87,6 +88,7 @@ flutter:
     - assets/write/UnrealEngine/
     - assets/write/Vue/
     - assets/write/Web/
+    - assets/write/Other/
 
     - assets/program/
     - assets/programIndex/
