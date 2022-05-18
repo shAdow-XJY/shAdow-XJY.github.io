@@ -31,10 +31,13 @@ Future<void> assetWrite() async {
 
   //3. write down children dir in File (assets\\writeIndex\\writeCategory.txt)
   File file = File("assets\\writeIndex\\writeCategory.txt");
-  file.writeAsString(category,mode: FileMode.write);
-  await file.readAsString().then((value) => {
-    print(value),
-  });
+  if(!file.existsSync()){
+    file.create();
+  }
+  await file.writeAsString(category,mode: FileMode.write);
+  // await file.readAsString().then((value) => {
+  //   print(value),
+  // });
 
   //4. search the children files of every chlid dir, do the same job
   List<String> categoryList = category.split('\n');
@@ -75,10 +78,13 @@ Future<void> assetProgram() async {
 
   //3. write down children file in File (assets\\writeIndex\\writeCategory.txt)
   File file = File("assets\\programIndex\\programIndex.txt");
-  file.writeAsString(programIndex,mode: FileMode.write);
-  await file.readAsString().then((value) => {
-    print(value),
-  });
+  if(!file.existsSync()){
+    file.create();
+  }
+  await file.writeAsString(programIndex,mode: FileMode.write);
+  // await file.readAsString().then((value) => {
+  //   print(value),
+  // });
 
 }
 Future<void> assetVideo() async {
@@ -97,9 +103,12 @@ Future<void> assetVideo() async {
 
   //3. write down children file in File (assets\\writeIndex\\writeCategory.txt)
   File file = File("assets\\videoIndex\\videoIndex.txt");
-  file.writeAsString(programIndex,mode: FileMode.write);
-  await file.readAsString().then((value) => {
-    print(value),
-  });
+  if(!file.existsSync()){
+    file.create();
+  }
+  await file.writeAsString(programIndex,mode: FileMode.write);
+  // await file.readAsString().then((value) => {
+  //   print(value),
+  // });
 
 }

@@ -25,10 +25,13 @@ class _MdWidgetState extends State<MdWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Container(
         margin: const EdgeInsets.all(0.0),
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        width: size.width,
+        height: size.height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: theme.canvasColor,

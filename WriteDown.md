@@ -13,8 +13,9 @@ A new GitHub web blog done myself with the Flutter.
  git push origin master
 
 ## project upgrade
-//// jsdelivr: flutter build web --release --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://cdn.jsdelivr.net/npm/canvaskit-wasm@0.33.0/bin/
-//// 饿了么: flutter build web --release --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://npm.elemecdn.com/browse/canvaskit-wasm@0.33.0/bin/
+//// jsdelivr: https://cdn.jsdelivr.net/npm/canvaskit-wasm@0.33.0/bin/
+//// 饿了么: https://npm.elemecdn.com/browse/canvaskit-wasm@0.33.0/bin/
+//// 饿了么: https://github.elemecdn.com/browse/canvaskit-wasm@0.33.0/bin/
 // tnnd贼ex，换个镜像源，要不就是没有，有的快一点换个浏览器直接就变慢了，换了台电脑也慢，手机也不行。
 // 在官方源或者镜像源将wasm下载下来，放在assets,用自己运行的网站项目中保存下来
 // 在pub。yaml ：【    - assets/canvaskit-wasm@0.33.0/bin/】
@@ -22,8 +23,10 @@ A new GitHub web blog done myself with the Flutter.
 #### run file_generator.dart
 #### run font_collection.dart;  and then run the pip cmd in local/fonts/(using python tools: fonttools)
 1. flutter build web --release 
-//flutter build web --release --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://shadowplusing.website/assets/assets/canvaskit-wasm@0.33.0/bin/
-
+> mirror source 
+> flutter build web --release --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://github.elemecdn.com/browse/canvaskit-wasm@0.33.0/bin/
+> github path with DNS
+> flutter build web --release --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://shadowplusing.website/assets/assets/canvaskit-wasm@0.33.0/bin/
 2. cd ./build/web
 3. git add .
 4. git commit -m ""
@@ -72,7 +75,9 @@ A new GitHub web blog done myself with the Flutter.
    it will take a little! a little! time to use the wasm,I think it because I make my site CDN.
 3. flutter build web --release --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://shadowplusing.website/assets/assets/canvaskit-wasm@0.33.0/bin/
 结论:(我的域名有为github page添加CDN解析)浏览器第一次下载可能需要十几二十几秒，有时好的时候是十秒内，这只是说第一次的情况，接下来在停用缓存的情况下刷新，重开进入，都是几毫秒的耗时。
-   
+### assets/canvakit.wasm ---gitee
+1. gitee 仓库同步 github仓库，这样[canvaskit-wasm@0.33.0/bin]在GitHub和Gitee都有一个地址，可以尝试使用gitee的地址看看速度怎么样
+
 ### define assets font
 1. use the local assets fonts in assets if the fonts download online too long
 
