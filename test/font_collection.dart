@@ -7,7 +7,7 @@ Future<void> main() async {
   var list = await assetDir('write');
   var list2 = await assetDir('program');
   var list3 = await assetDir('videoIndex');
-  var list4 = await assetFile(['lib','indexPage','indexHome','indexHome.dart']);
+  var list4 = await rootFile(['lib','indexPage','indexHome','indexHome.dart']);
   set.addAll(list);
   set.addAll(list2);
   set.addAll(list3);
@@ -46,7 +46,7 @@ Future<List> assetDir(String dirname) async {
   return writeSet.toList();
 }
 
-Future<List> assetFile(List<String> filePath) async {
+Future<List> rootFile(List<String> filePath) async {
   Set writeSet = {};
   File file = File(filePath.join("\\"));
   var temp = await file.readAsString();

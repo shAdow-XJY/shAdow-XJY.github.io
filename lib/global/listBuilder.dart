@@ -49,7 +49,7 @@ class _ListBuilderState extends State<ListBuilder> {
                               borderRadius: BorderRadius.circular(50),
                               child: Image.asset(widget.levelObj[index]
                                       ['image'] ??
-                                  'assets/image/avatar.jpg'),
+                                  'assets/icon/repositories.png'),
                             ),
                           ),
                         ),
