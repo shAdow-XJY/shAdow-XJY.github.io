@@ -2,12 +2,11 @@
 
 DIY一个简单的flutter组件，毛玻璃效果。
 
-
+Web address:[https://shadowplusing.website/#/](https://shadowplusing.website/#/)
 
 ## 效果
 
 ![blur_glass example](https://img-blog.csdnimg.cn/a56df590505848fa8cedf52e45e4fb2a.png#pic_center)
-
 
 
 ## 发布
