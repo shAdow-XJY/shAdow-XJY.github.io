@@ -2,7 +2,7 @@
 
 一款开源、简约好用的MD编辑器，支持Windows、Macos、Linux。
 
-![marktext.png (2440×1598) (raw.githubusercontent.com)](https://raw.githubusercontent.com/marktext/marktext/develop/docs/marktext.png)
+![marktext.png (2440×1598) (raw.githubusercontent.com)](https://img-blog.csdnimg.cn/6b904a260de84a9c86f6dbd45cc9e62f.png#pic_center)
 
 ### Windows安装
 

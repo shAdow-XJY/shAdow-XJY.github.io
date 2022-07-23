@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:github_blog/global/mdWidget.dart';
 import '../../global/blurGlass.dart';
-import '../../global/listBuilder.dart';
-
+import 'package:list_twolevel/list_A.dart';
+import 'package:list_twolevel/list_B.dart';
 class IndexWrite extends StatefulWidget {
   const IndexWrite({Key? key}) : super(key: key);
 
@@ -70,73 +70,69 @@ class _IndexWriteState extends State<IndexWrite> {
 
   @override
   Widget build(BuildContext context) {
-    return _oneLevel
-        ? ListBuilder(
-            oneLevel: _oneLevel,
-            levelObj: oneLevelObj,
-            onPressed: (selectedCategory) {
-              if (selectedCategory != 'default') {
-                _oneLevel = false;
-                _twoLevel = true;
-                _selectedCategory = selectedCategory;
-                twoLevelInit(_selectedCategory);
-                setState(() {
-                  _oneLevel;
-                });
-              }
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
+      child: _oneLevel
+          ? AListBuilder(
+        levelObj: oneLevelObj,
+        onPressed: (selectedCategory) {
+          _oneLevel = false;
+          _twoLevel = true;
+          _selectedCategory = selectedCategory;
+          twoLevelInit(_selectedCategory);
+          setState(() {
+            _oneLevel;
+          });
+        },
+      )
+          : Stack(
+        children: [
+          !_thrLevel
+              ? BListBuilder(
+            levelObj: twoLevelObj,
+            itemHeight: 50,
+            onPressed: (selectedTitle) {
+              _selectedTitle = selectedTitle;
+              _twoLevel = false;
+              _thrLevel = true;
+              setState(() {
+                _thrLevel;
+              });
             },
           )
-        : Stack(
-            children: [
-              !_thrLevel
-                  ? ListBuilder(
-                      oneLevel: _oneLevel,
-                      levelObj: twoLevelObj,
-                      itemHeight: 50,
-                      onPressed: (selectedTitle) {
-                        if (selectedTitle != 'default') {
-                          _selectedTitle = selectedTitle;
-                          _twoLevel = false;
-                          _thrLevel = true;
-                          setState(() {
-                            _thrLevel;
-                          });
-                        }
-                      },
-                    )
-                  : Container(
-                      margin: const EdgeInsets.all(10.0),
-                      child: MdWidget(
-                          title: _selectedTitle.substring(
-                              0, _selectedTitle.lastIndexOf('.')),
-                      path: 'assets/write/$_selectedCategory/$_selectedTitle',),
-                    ),
-              Positioned(
-                  bottom: 10.0,
-                  right: 10.0,
-                  child: BlurGlass(
-                      marginValue: 5.0,
-                      paddingValue: 5.0,
-                      child: IconButton(
-                        icon: const Icon(Icons.arrow_back),
-                        color: Colors.white,
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onPressed: () {
-                          if (_twoLevel) {
-                            setState(() {
-                              _oneLevel = true;
-                            });
-                            _twoLevel = false;
-                          } else if (_thrLevel) {
-                            setState(() {
-                              _thrLevel = false;
-                            });
-                            _twoLevel = true;
-                          }
-                        },
-                      )))
-            ],
-          );
+              : MdWidget(
+            title: _selectedTitle.substring(
+                0, _selectedTitle.lastIndexOf('.')),
+            path: 'assets/write/$_selectedCategory/$_selectedTitle',
+          ),
+          Positioned(
+              bottom: 10.0,
+              right: 10.0,
+              child: BlurGlass(
+                  marginValue: 5.0,
+                  paddingValue: 5.0,
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    color: Colors.white,
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onPressed: () {
+                      if (_twoLevel) {
+                        setState(() {
+                          _oneLevel = true;
+                        });
+                        _twoLevel = false;
+                      } else if (_thrLevel) {
+                        setState(() {
+                          _thrLevel = false;
+                        });
+                        _twoLevel = true;
+                      }
+                    },
+                  )))
+        ],
+      ),
+    );
+
   }
 }

@@ -62,7 +62,12 @@ export PUB_HOSTED_URL=https://pub.flutter-io.cn
 export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
 ```
 
-### 
+##### accounts.com问题
+
+1. 如果curl google.com 都没问题，设置代理都没问题后，但是发布命令之后出现account.com超时问题。
+2. 解决方法是不用idea的terminal，也不要用power shell，直接打开cmd。
+3. cmd cd到目录，在cmd设置代理、发布就行。
+
 
 ### 参考
 

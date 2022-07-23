@@ -48,7 +48,7 @@ class _MusicPlayerState extends State<MusicPlayer> with TickerProviderStateMixin
     //2 :next song
     if(assetsAudioPlayer.playlist == null){
       musicPlayerInit();
-      print("init");
+      debugPrint("init");
     }else{
       switch (num){
         case 0:{assetsAudioPlayer.playOrPause();}
