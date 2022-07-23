@@ -91,10 +91,8 @@ class _MdWidgetState extends State<MdWidget> {
                           code: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
-                            //backgroundColor: Color(0xFF2B2B2C),
+                            fontFamily: 'Noto',
                           ),
-                          //codeblockPadding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 20.0),
-                          //codeblockDecoration: const BoxDecoration(color: Color(0xFF2B2B2C),),
 
                         ),
                       ),

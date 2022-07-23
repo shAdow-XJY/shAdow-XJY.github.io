@@ -81,6 +81,7 @@ class _IndexVideoState extends State<IndexVideo> {
                 );
 
               });
-        }));
+        })
+    );
   }
 }

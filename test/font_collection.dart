@@ -8,10 +8,12 @@ Future<void> main() async {
   var list2 = await assetDir('program');
   var list3 = await assetDir('videoIndex');
   var list4 = await rootFile(['lib','indexPage','indexHome','indexHome.dart']);
+  var list5 = await rootFile(['lib','indexPage','indexFavorite','indexFavorite.dart']);
   set.addAll(list);
   set.addAll(list2);
   set.addAll(list3);
   set.addAll(list4);
+  set.addAll(list5);
   File file = File("local\\fonts\\fontcontent.txt");
   if(!file.existsSync()){
     file.create();

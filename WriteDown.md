@@ -22,15 +22,23 @@ A new GitHub web blog done myself with the Flutter.
 #### preupgrade
 #### run file_generator.dart
 #### run font_collection.dart;  and then run the pip cmd in local/fonts/(using python tools: fonttools)
-1. flutter build web --release 
-> mirror source 
+1. flutter build web --release (html最快,有DNS的canvakit除了第一次启动之后体验也可以)
+>                        mirror source 
 > flutter build web --release --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://github.elemecdn.com/browse/canvaskit-wasm@0.33.0/bin/
-> github path with DNS
+>                        cloud server tomcat
+> flutter build web --release --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://119.45.21.152:443/canvaskit/
+>                        github path with DNS
 > flutter build web --release --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://shadowplusing.website/assets/assets/canvaskit-wasm@0.33.0/bin/
+>                        html render
+> flutter build web --web-renderer html --release
 2. cd ./build/web
 3. git add .
 4. git commit -m ""
 5. git push origin master
+
+## using proxy in terminal cmd,端口取决自己的VPN
+1.set http_proxy=127.0.0.1:10809
+2.set https_proxy=127.0.0.1:10809
 
 ## write upgrade
 1. change or add new file in assets/write/
@@ -112,6 +120,7 @@ A new GitHub web blog done myself with the Flutter.
 14. [Flutter GridView](https://www.jianshu.com/p/fb3bf633ee12)
 15. [fonttools](https://cyh.me/2020/04/font-minification/)
 16. [web list mouse drag control](https://cloud.tencent.com/developer/ask/sof/749407)
+17. [flutter web build --web-render](https://flutter.cn/docs/development/tools/web-renderers)
 
 ## file and server refer
 1. [tomcat](https://www.cnblogs.com/beginner-boy/p/7806680.html)
@@ -119,8 +128,10 @@ A new GitHub web blog done myself with the Flutter.
 3. [cloud server]()
 4. [tomcat https](https://segmentfault.com/a/1190000009780545)
 5. [check 端口开放](https://www.cnblogs.com/tongying/p/13182340.html)
+6. [tomcat flutter web](https://blog.csdn.net/EthanCo/article/details/121012815)
 
 ## fail to use , but maybe useful one day
 1.  [dio: ^4.0.6](it's useful without doubt.)
 2.  [shelf_proxy: ^1.0.1](use to solve some cors ,but you konw, company protects greatly)
+3.  [flutterApp 初始化前执行函数](https://blog.csdn.net/Random_Smi/article/details/110182502)
 
