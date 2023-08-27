@@ -1,7 +1,7 @@
 ## Website / 网址
 
-[https://shadowplusing.website/](https://shadowplusing.website/)
-[https://shadow-xjy.gitee.io/](https://shadow-xjy.gitee.io/)
+GitHub：[https://shadowplusing.website/](https://shadowplusing.website/)
+Gitee：[https://shadow-xjy.gitee.io/](https://shadow-xjy.gitee.io/)
 
 ## 预览
 
@@ -25,9 +25,9 @@ Android Studio
 
 ## 下载
 
-GitHub：[shAdow-XJY/github_blog: the source code of the github.io](https://github.com/shAdow-XJY/github_blog)
+GitHub：[https://github.com/shAdow-XJY/shAdow-XJY.github.io](https://github.com/shAdow-XJY/shAdow-XJY.github.io)
 
-Gitee：[github_blog: github page——博客源码工程 框架：flutter (gitee.com)](https://gitee.com/shAdowPlusing/github_blog)
+Gitee：[https://gitee.com/shAdow-XJY/shAdow-XJY](https://gitee.com/shAdow-XJY/shAdow-XJY)
 
 #### 使用
 
