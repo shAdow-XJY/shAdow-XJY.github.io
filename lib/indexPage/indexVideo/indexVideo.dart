@@ -64,7 +64,7 @@ class _IndexVideoState extends State<IndexVideo> {
               itemCount: videoTitles.length,
               //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                //横轴元素个数
+                  //横轴元素个数
                   crossAxisCount: crossAxisCount,
                   //纵轴间距
                   mainAxisSpacing: 5.0,

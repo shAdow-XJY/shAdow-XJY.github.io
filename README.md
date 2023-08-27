@@ -1,6 +1,7 @@
 ## Website / 网址
 
 [https://shadowplusing.website/](https://shadowplusing.website/)
+[https://shadow-xjy.gitee.io/](https://shadow-xjy.gitee.io/)
 
 ## 预览
 
