@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:github_blog/global/videoWidget/videoCard.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-
+import 'dart:html' as html;  // Import the dart:html library for web-specific features
 
 class IndexVideo extends StatefulWidget {
   const IndexVideo({Key? key}) : super(key: key);
@@ -30,11 +30,20 @@ class _IndexVideoState extends State<IndexVideo> {
   @override
   void initState() {
     super.initState();
-    rootBundle.loadString('assets/videoIndex/videoIndex.txt').then((value) => {
-          videoTitles = value.split('\n'),
-          videoTitles.removeLast(),
-          titleProcess(),
-        });
+    // rootBundle.loadString('assets/videoIndex/videoIndex.txt').then((value) => {
+    //       videoTitles = value.split('\n'),
+    //       videoTitles.removeLast(),
+    //       titleProcess(),
+    //     });
+    // Replace the rootBundle.loadString with web-specific method
+    html.HttpRequest.getString('assets/videoIndex/videoIndex.txt').then((value) {
+      videoTitles = value.split('\n');
+      videoTitles.removeLast();
+      titleProcess();
+    }).catchError((error) {
+      // Handle error if the file loading fails
+      print('Error loading file: $error');
+    });
   }
 
   @override
