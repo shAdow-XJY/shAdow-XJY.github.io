@@ -36,7 +36,7 @@ class _IndexVideoState extends State<IndexVideo> {
     //       titleProcess(),
     //     });
     // Replace the rootBundle.loadString with web-specific method
-    html.HttpRequest.getString('assets/videoIndex/videoIndex.txt').then((value) {
+    html.HttpRequest.getString('assets/assets/videoIndex/videoIndex.txt').then((value) {
       videoTitles = value.split('\n');
       videoTitles.removeLast();
       titleProcess();
