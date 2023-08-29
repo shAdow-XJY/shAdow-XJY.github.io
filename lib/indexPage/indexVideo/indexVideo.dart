@@ -37,14 +37,14 @@ class _IndexVideoState extends State<IndexVideo> {
     //     });
 
     // Replace the rootBundle.loadString with web-specific method
-    html.HttpRequest.getString('assets/assets/videoIndex/videoIndex.txt').then((value) {
-      videoTitles = value.split('\n');
-      videoTitles.removeLast();
-      titleProcess();
-    }).catchError((error) {
-      // Handle error if the file loading fails
-      print('Error loading file: $error');
-    });
+    // html.HttpRequest.getString('assets/assets/videoIndex/videoIndex.txt').then((value) {
+    //   videoTitles = value.split('\n');
+    //   videoTitles.removeLast();
+    //   titleProcess();
+    // }).catchError((error) {
+    //   // Handle error if the file loading fails
+    //   print('Error loading file: $error');
+    // });
     videoTitles = ["夏日预告企划.mp4"];
   }
 
