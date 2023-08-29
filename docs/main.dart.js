@@ -82221,7 +82221,8 @@ for(s=n.d,r=s.length,q=0;q<s.length;s.length===r||(0,A.O)(s),++q){p=s[q]
 o=J.Z(p)
 m.push(o.M(p,0,o.lY(p,".")))}n.ag(new A.aiW(n))},
 av(){this.aK()
-A.aIB("assets/assets/videoIndex/videoIndex.txt").bl(new A.aiU(this),t.P).kh(new A.aiV())},
+A.aIB("assets/assets/videoIndex/videoIndex.txt").bl(new A.aiU(this),t.P).kh(new A.aiV())
+this.d=A.a(["\u590f\u65e5\u9884\u544a\u4f01\u5212.mp4"],t.s)},
 l(){this.aJ()},
 H(a){var s=null,r=A.ai(a),q=A.cU(20)
 return A.c0(s,A.Ao(new A.aiT(this)),B.l,s,s,new A.br(r.as,s,s,q,B.fb,s,B.w),s,s,B.b8,B.D0,s,s,s)}}

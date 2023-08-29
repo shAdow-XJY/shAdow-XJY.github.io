@@ -35,6 +35,7 @@ class _IndexVideoState extends State<IndexVideo> {
     //       videoTitles.removeLast(),
     //       titleProcess(),
     //     });
+
     // Replace the rootBundle.loadString with web-specific method
     html.HttpRequest.getString('assets/assets/videoIndex/videoIndex.txt').then((value) {
       videoTitles = value.split('\n');
@@ -44,6 +45,7 @@ class _IndexVideoState extends State<IndexVideo> {
       // Handle error if the file loading fails
       print('Error loading file: $error');
     });
+    videoTitles = ["夏日预告企划.mp4"];
   }
 
   @override
