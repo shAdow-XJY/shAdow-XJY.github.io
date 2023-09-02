@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:github_blog/global/videoWidget/videoCard.dart';
 import 'package:github_blog/model/indexData.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-// import 'dart:html' as html;  // Import the dart:html library for web-specific features
 
 class IndexVideo extends StatefulWidget {
   const IndexVideo({Key? key}) : super(key: key);
@@ -14,39 +12,13 @@ class IndexVideo extends StatefulWidget {
 
 class _IndexVideoState extends State<IndexVideo> {
   List<String> videoTitles = [];
-  // List<String> titles = [];
 
   int crossAxisCount = 5;
-
-  // void titleProcess() {
-  //   titles.clear();
-  //   for (var element in videoTitles) {
-  //     titles.add(element.substring(0, element.lastIndexOf('.')));
-  //   }
-  //   setState(() {
-  //     titles;
-  //   });
-  // }
 
   @override
   void initState() {
     super.initState();
-    // rootBundle.loadString('assets/videoIndex/videoIndex.txt').then((value) => {
-    //       videoTitles = value.split('\n'),
-    //       videoTitles.removeLast(),
-    //       titleProcess(),
-    //     });
     videoTitles = IndexData.videoData.keys.toList();
-    // // Replace the rootBundle.loadString with web-specific method
-    // // html.HttpRequest.getString('assets/assets/videoIndex/videoIndex.txt').then((value) {
-    // //   videoTitles = value.split('\n');
-    // //   videoTitles.removeLast();
-    // //   titleProcess();
-    // // }).catchError((error) {
-    // //   // Handle error if the file loading fails
-    // //   print('Error loading file: $error');
-    // // });
-    // videoTitles = ["夏日预告企划.mp4"];
   }
 
   @override

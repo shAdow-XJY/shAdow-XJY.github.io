@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:github_blog/global/mdWidget.dart';
+import 'package:github_blog/model/indexData.dart';
 import '../../global/blurGlass.dart';
 import 'package:list_twolevel/list_A.dart';
 import 'package:list_twolevel/list_B.dart';
@@ -58,14 +59,16 @@ class _IndexWriteState extends State<IndexWrite> {
   @override
   void initState() {
     super.initState();
-    rootBundle
-        .loadString('assets/writeIndex/writeCategory.txt')
-        .then((value) => {
-              print(value.split('\n')),
-              oneLevelTitles = value.split('\n'),
-              oneLevelTitles.removeLast(),
-              oneLevelInit(oneLevelTitles),
-            });
+    // rootBundle
+    //     .loadString('assets/writeIndex/writeCategory.txt')
+    //     .then((value) => {
+    //           print(value.split('\n')),
+    //           oneLevelTitles = value.split('\n'),
+    //           oneLevelTitles.removeLast(),
+    //           oneLevelInit(oneLevelTitles),
+    //         });
+    oneLevelTitles = IndexData.writeData.keys.toList();
+    oneLevelInit(oneLevelTitles);
   }
 
   @override
