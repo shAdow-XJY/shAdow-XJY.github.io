@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:github_blog/global/videoWidget/videoCard.dart';
-import 'package:github_blog/model/indexData.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+
+import '../../innerAssets/videoAsset/videoData.dart';
 
 class IndexVideo extends StatefulWidget {
   const IndexVideo({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _IndexVideoState extends State<IndexVideo> {
   @override
   void initState() {
     super.initState();
-    videoTitles = IndexData.videoData.keys.toList();
+    videoTitles = VideoData.videoData.keys.toList();
   }
 
   @override

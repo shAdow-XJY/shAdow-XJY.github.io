@@ -31,6 +31,11 @@ Gitee：[https://gitee.com/shAdow-XJY/shAdow-XJY](https://gitee.com/shAdow-XJY/s
 
 ## 打包前资源刷新
 
+#### build cmd
+
+flutter build web --release
+flutter build web --web-renderer html --release
+
 #### Web静态字体包体积压缩（可选）
 
 相关项目仓库链接：[subFontPackage 字体包压缩](https://github.com/shAdow-XJY/subFontPackage)
