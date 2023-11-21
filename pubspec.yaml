@@ -69,20 +69,6 @@ flutter:
     - assets/video/
     - assets/videoIndex/
 
-    - assets/write/
-    - assets/writeIndex/
-
-    - assets/write/Flutter/
-    - assets/write/UnrealEngine/
-    - assets/write/Vue/
-    - assets/write/Web/
-    - assets/write/Other/
-
-    - assets/program/
-    - assets/programIndex/
-
-    - assets/canvaskit-wasm@0.33.0/bin/
-
 
   fonts:
     - family: Noto
