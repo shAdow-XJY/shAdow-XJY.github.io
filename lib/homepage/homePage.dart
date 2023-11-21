@@ -4,10 +4,10 @@ import 'package:github_blog/indexPage/indexFavorite/indexFavorite.dart';
 import 'package:github_blog/indexPage/indexVideo/indexVideo.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:sidebarx/sidebarx.dart';
+import '../indexPage/indexBook/indexBook.dart';
 import '../indexPage/indexHome/indexHome.dart';
 import '../indexPage/indexPeople/indexPeople.dart';
 import '../indexPage/indexProgram/indexProgram.dart';
-import '../indexPage/indexWrite/indexWrite.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
         ),
         const SidebarXItem(
           icon: Icons.book,
-          label: 'Write',
+          label: 'Book',
         ),
         const SidebarXItem(
           icon: Icons.category,
@@ -171,9 +171,9 @@ class _HomePageState extends State<HomePage> {
                   child: Stack(
                 children: [
                   _ScreensExample(controller: _controller),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
+                    children: [
                       MusicPlayer(),
                     ],
                   ),
@@ -207,7 +207,7 @@ class _ScreensExample extends StatelessWidget {
           case 1:
             return const IndexVideo();
           case 2:
-            return const IndexWrite();
+            return const IndexBook();
           case 3:
             return const IndexProgram();
           case 4:
