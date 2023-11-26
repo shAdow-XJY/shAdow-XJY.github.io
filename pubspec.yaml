@@ -61,12 +61,14 @@ flutter:
     - assets/image/
     - assets/image/video/
     - assets/image/favorite/
+    - assets/image/program/
+
+
     - assets/icon/
 
     - assets/music/
 
     - assets/video/
-
 
   fonts:
     - family: Noto

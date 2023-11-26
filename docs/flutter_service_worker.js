@@ -3,8 +3,8 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"assets/AssetManifest.bin": "86a96509c60e4a7eb6efac8f7faeb026",
-"assets/AssetManifest.json": "75e5129a8f1d0a02cbc3d4cb61992d53",
+const RESOURCES = {"assets/AssetManifest.bin": "c5975b7dc7aafe8b25a346844975993f",
+"assets/AssetManifest.json": "aea8f07299d6cb9b687401dddf58f8ec",
 "assets/assets/fonts/NotoSansSC-Regular.otf": "37980b530d69f66e75052464d54ad3a7",
 "assets/assets/icon/bilibili.png": "b158db1a6540de767c1d310fb7319fda",
 "assets/assets/icon/gitee.png": "23017ec2444a84698d9e2768479a2d0f",
@@ -16,6 +16,7 @@ const RESOURCES = {"assets/AssetManifest.bin": "86a96509c60e4a7eb6efac8f7faeb026
 "assets/assets/image/background.jpg": "66968c48060859187e9c2415018d4271",
 "assets/assets/image/favorite/run.jpg": "c391ba997b235c29f247d373119835ba",
 "assets/assets/image/favorite/wlop.jpg": "da9b4d33c7a5ed94cfa3fc6fab0c4481",
+"assets/assets/image/program/gameCenter.png": "a10a5affc052fc3bc088b7f07fc8846a",
 "assets/assets/image/video/%25E5%25A4%258F%25E6%2597%25A5%25E9%25A2%2584%25E5%2591%258A%25E4%25BC%2581%25E5%2588%2592.png": "0ddf640fb8e88ac302b6b97121b84c8e",
 "assets/assets/music/KoheiTanaka_BeyondtheHappyEnd.mp3": "22b454b403809ce4668c2cb156472965",
 "assets/assets/music/KoheiTanaka_FleetingFragmentofMemory.mp3": "b277d022777d7e1388da0d596286664a",
@@ -43,10 +44,10 @@ const RESOURCES = {"assets/AssetManifest.bin": "86a96509c60e4a7eb6efac8f7faeb026
 "icons/Icon-512.png": "051a13ea5e4f34ea7bb0274b74cbfc5f",
 "icons/Icon-maskable-192.png": "c19e0d2d4277def438c834395399eb8e",
 "icons/Icon-maskable-512.png": "051a13ea5e4f34ea7bb0274b74cbfc5f",
-"index.html": "7302447a87246b380cdd6bb2714656f6",
-"/": "7302447a87246b380cdd6bb2714656f6",
+"index.html": "14f0d0e2a22469f4fa05072a24e06df6",
+"/": "14f0d0e2a22469f4fa05072a24e06df6",
 "js/fullScreen.js": "10c0399bfaa7ab7dc143affebfc074b7",
-"main.dart.js": "c43e6697715b53631a77a19d7adca25d",
+"main.dart.js": "9c40f7a860834dc07196eeeb41fc1733",
 "manifest.json": "801a76987e825ec91939a1fd48081b42",
 "README.md": "633b0e7f1da14ff3ec0fd5e3157f504f",
 "version.json": "d066d2faac6c5033a4146542420fcb0c"};
