@@ -62,6 +62,7 @@ flutter:
     - assets/image/video/
     - assets/image/favorite/
     - assets/image/program/
+    - assets/image/book/
 
 
     - assets/icon/
@@ -69,6 +70,7 @@ flutter:
     - assets/music/
 
     - assets/video/
+
 
   fonts:
     - family: Noto

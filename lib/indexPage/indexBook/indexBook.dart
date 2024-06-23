@@ -10,77 +10,23 @@ class IndexBook extends StatefulWidget {
 
 class _IndexBookState extends State<IndexBook> {
   // 初始化一个变量来存储当前选中的卡片内容
-  String selectedContent = '内容1';
+  String selectedContent = 'Book 1';
   String selectedDescription = '''
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
-  这是一段描述文字，可能会很长，需要滚动查看。
+  Book 1 introduction.
   ''';
 
   // 卡片数据
   List<Map<String, String>> cards = [
-    {"image": "assets/icon/bilibili.png", "text": "内容1"},
-    {"image": "assets/icon/gitee.png", "text": "内容2"},
-    {"image": "assets/icon/bilibili.png", "text": "内容3"},
-    {"image": "assets/icon/gitee.png", "text": "内容4"},
-    {"image": "assets/icon/bilibili.png", "text": "内容5"},
-    {"image": "assets/icon/gitee.png", "text": "内容6"},
-    {"image": "assets/icon/bilibili.png", "text": "内容7"},
-    {"image": "assets/icon/gitee.png", "text": "内容9"},
-    {"image": "assets/icon/bilibili.png", "text": "内容8"},
-    {"image": "assets/icon/gitee.png", "text": "内容21"},
-    {"image": "assets/icon/bilibili.png", "text": "内容11"},
-    {"image": "assets/icon/gitee.png", "text": "内容22"},
-    {"image": "assets/icon/bilibili.png", "text": "内1容1"},
-    {"image": "assets/icon/gitee.png", "text": "内容22"},
-    {"image": "assets/icon/bilibili.png", "text": "内12容1"},
-    {"image": "assets/icon/gitee.png", "text": "内容122"},
-    {"image": "assets/icon/bilibili.png", "text": "内1212容1"},
-    {"image": "assets/icon/gitee.png", "text": "内容12122"},
-    {"image": "assets/icon/bilibili.png", "text": "内1212容1"},
-    {"image": "assets/icon/gitee.png", "text": "内1212容2"},
-    // ... 更多卡片数据
+    {
+      "image": "assets/image/book/book.jpg",
+      "text": "Book 1",
+      "description": "Book 1 introduction."
+    },
+    {
+      "image": "assets/image/book/book_website.jpg",
+      "text": "Novel Website ...",
+      "description": "Novel Website introduction."
+    },
   ];
 
   // 添加一个用于追踪拖动的变量
@@ -145,7 +91,7 @@ class _IndexBookState extends State<IndexBook> {
           const Spacer(flex: 1), // 5% 空白
 
           Expanded(
-            flex: 3, // 15% 横向ScrollView
+            flex: 5,
             child: GestureDetector(
               onHorizontalDragStart: _onHorizontalDragStart,
               onHorizontalDragUpdate: _onHorizontalDragUpdate,
@@ -159,14 +105,15 @@ class _IndexBookState extends State<IndexBook> {
                     onTap: () {
                       setState(() {
                         selectedContent = cards[index]["text"]!;
-                        selectedDescription = "这是更新的描述文字。";
+                        selectedDescription = cards[index]["description"]!;
                       });
                     },
                     child: Stack(
                       alignment: Alignment.topCenter,
                       children: [
                         Container(
-                          width: 200, // 设置卡片的固定宽度
+                          height: double.infinity,
+                          width: 100, // 设置卡片的固定宽度
                           // padding: EdgeInsets.all(8), // 添加一些内边距
                           margin: const EdgeInsets.only(top: 28), // 为顶部箭头留出空间
                           decoration: BoxDecoration(
@@ -186,9 +133,9 @@ class _IndexBookState extends State<IndexBook> {
                                   borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
                                   child: Image.asset(
                                     cards[index]["image"]!,
-                                    height: 180, // 图片高度
-                                    width: double.infinity, // 图片宽度
-                                    fit: BoxFit.fill,
+                                    height: 50, // 图片高度
+                                    // width: double.infinity, // 图片宽度
+                                    fit: BoxFit.fitHeight,
                                   ),
                                 ),
                                 Padding(

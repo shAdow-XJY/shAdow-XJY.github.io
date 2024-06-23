@@ -13,18 +13,15 @@ class _IndexProgramState extends State<IndexProgram> {
   final PageController _pageController = PageController();
   final List<String> _images = [
     'assets/image/program/gameCenter.png',
-    'assets/image/program/gameCenter.png',
-    'assets/image/program/gameCenter.png',
+    'assets/image/program/novelCenter.png',
   ];
   final List<String> _descriptions = [
     'Game Center',
-    'Game Center',
-    'Game Center'
+    'Novel Center',
   ];
   final List<String> _urls = [
     'https://shadowplusing.website/game/',
-    'https://shadowplusing.website/game/',
-    'https://shadowplusing.website/game/',
+    'https://shadowplusing.website/novel_read/',
   ];
 
   int _currentPage = 0;
