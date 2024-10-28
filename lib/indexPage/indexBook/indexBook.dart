@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class IndexBook extends StatefulWidget {
   const IndexBook({Key? key}) : super(key: key);
@@ -9,25 +10,46 @@ class IndexBook extends StatefulWidget {
 }
 
 class _IndexBookState extends State<IndexBook> {
-  // 初始化一个变量来存储当前选中的卡片内容
-  String selectedContent = 'Book 1';
-  String selectedDescription = '''
-  Book 1 introduction.
-  ''';
-
   // 卡片数据
-  List<Map<String, String>> cards = [
+  final List<Map<String, String>> cards = [
     {
-      "image": "assets/image/book/book.jpg",
-      "text": "Book 1",
-      "description": "Book 1 introduction."
+      "image": "assets/image/book/custom_search.png",
+      "text": "Custom Search Page",
+      "description": "Custom Search Web Page.",
+      "url": "https://shadowplusing.website/custom_search_page/",
     },
     {
-      "image": "assets/image/book/book_website.jpg",
-      "text": "Novel Website ...",
-      "description": "Novel Website introduction."
+      "image": "assets/image/book/sub_font.png",
+      "text": "SubFont Package",
+      "description": "Compress the size of the font package.",
+      "url": "https://github.com/shAdow-XJY/subFontPackage",
+    },
+    {
+      "image": "assets/image/book/writing_writer.jpg",
+      "text": "Writing Writer",
+      "description": "A write application developed and used myself with local storage.",
+      "url": "https://github.com/shAdow-XJY/writing_wirter",
+    },
+    {
+      "image": "assets/image/book/back_end.png",
+      "text": "Backend Service",
+      "description": "A simple local backend service and debug front web.",
+      "url": "https://github.com/shAdow-XJY/backend_service",
+    },
+    {
+      "image": "assets/image/book/novel_read.png",
+      "text": "Novel Read",
+      "description": "A simple web read page. (doing...)",
+      "url": "https://shadowplusing.website/novel_read/",
     },
   ];
+
+  // 初始化一个变量来存储当前选中的卡片内容
+  String selectedContent = "Custom Search Page";
+  String selectedDescription =
+  '''
+Custom Search Web Page.
+  ''';
 
   // 添加一个用于追踪拖动的变量
   double _startDragX = 0.0;
@@ -61,33 +83,73 @@ class _IndexBookState extends State<IndexBook> {
           const Spacer(flex: 1), // 10% 空白
           Expanded(
             flex: 6, // 60% 竖直ScrollView
-            child: Container(
-              width: double.infinity, // 确保在水平方向上占满宽度
-              decoration: BoxDecoration(
-                color: Colors.deepPurple,
-                image: DecorationImage(
-                  image: AssetImage(
-                    cards.firstWhere((card) => card["text"] == selectedContent)["image"]!,
+            child: Stack(
+              children: [
+                Container(
+                  width: double.infinity, // 确保在水平方向上占满宽度
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).highlightColor,
+                    image: DecorationImage(
+                      image: AssetImage(
+                        cards.firstWhere((card) => card["text"] == selectedContent)["image"]!,
+                      ),
+                      fit: BoxFit.contain,
+                      alignment: Alignment.centerRight,
+                      colorFilter: ColorFilter.mode(
+                        Colors.black.withOpacity(0.5),
+                        BlendMode.dstATop,
+                      ),
+                    ),
                   ),
-                  fit: BoxFit.contain,
-                  colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.5),
-                      BlendMode.dstATop
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(16), // 标题的内边距
+                        child: Text(
+                          selectedContent,
+                          style: const TextStyle(
+                            fontSize: 20, // 标题字体大小
+                            fontWeight: FontWeight.bold, // 加粗标题
+                            color: Colors.white, // 标题颜色
+                          ),
+                          textAlign: TextAlign.center, // 标题居中对齐
+                        ),
+                      ),
+                      const Divider(color: Colors.grey), // 分隔线
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(16), // 内容内边距
+                            child: Text(
+                              selectedDescription,
+                              style: const TextStyle(
+                                fontSize: 16, // 描述字体大小
+                                color: Colors.grey, // 描述颜色
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              child: SingleChildScrollView(
-                child: Container(
-                  width: double.infinity, // 同样确保在水平方向上占满宽度
-                  padding: const EdgeInsets.all(16), // 添加内边距
-                  child: Text(
-                    selectedDescription,
-                    style: const TextStyle(color: Colors.white),
+                Positioned(
+                  top: 16, // 图标按钮距离顶部的距离
+                  left: 16, // 图标按钮距离左边的距离
+                  child: IconButton(
+                    icon: const Icon(Icons.troubleshoot, color: Colors.blue), // 图标和颜色
+                    onPressed: () {
+                      // 点击事件：跳转到指定网页
+                      final url = cards.firstWhere((card) => card["text"] == selectedContent)["url"];
+                      launchUrl(Uri.parse(url ?? ""));
+                    },
                   ),
                 ),
-              ),
+              ],
             ),
           ),
+
           const Spacer(flex: 1), // 5% 空白
 
           Expanded(

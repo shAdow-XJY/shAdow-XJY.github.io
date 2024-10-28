@@ -88,15 +88,15 @@ class _HomePageState extends State<HomePage> {
         ),
         const SidebarXItem(
           icon: Icons.video_library,
-          label: 'Video',
+          label: 'Videos',
         ),
         const SidebarXItem(
-          icon: Icons.book,
-          label: 'Book',
+          icon: Icons.web,
+          label: 'Websites',
         ),
         const SidebarXItem(
-          icon: Icons.category,
-          label: 'Program',
+          icon: Icons.collections,
+          label: 'Collections',
         ),
         const SidebarXItem(
           icon: Icons.people,
@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage> {
           default:
             return Text(
               'Not found page',
-              style: theme.textTheme.headline5,
+              style: theme.textTheme.headlineSmall,
             );
         }
       }
@@ -217,7 +217,7 @@ class _ScreensExample extends StatelessWidget {
           default:
             return Text(
               'Not found page',
-              style: theme.textTheme.headline5,
+              style: theme.textTheme.headlineSmall,
             );
         }
       },

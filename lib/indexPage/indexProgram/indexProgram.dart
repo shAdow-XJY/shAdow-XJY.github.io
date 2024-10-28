@@ -20,7 +20,7 @@ class _IndexProgramState extends State<IndexProgram> {
     'Novel Center',
   ];
   final List<String> _urls = [
-    'https://shadowplusing.website/game/',
+    'https://shadowplusing.website/shadow_game_center/',
     'https://shadowplusing.website/novel_read/',
   ];
 
