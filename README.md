@@ -35,7 +35,11 @@ Gitee：[https://gitee.com/shAdow-XJY/shAdow-XJY](https://gitee.com/shAdow-XJY/s
 #### build cmd
 
 flutter build web --release
-flutter build web --web-renderer html --release
+[flutter build web --web-renderer html --release] ❌
+
+✅ 新的flutter版本没法用html构建了，一定需要下载渲染器了，太难绷了
+flutter build web --release
+flutter build web --wasm --release
 
 #### Web静态字体包体积压缩（可选）
 

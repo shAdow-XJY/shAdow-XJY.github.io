@@ -73,6 +73,6 @@ flutter:
 
 
   fonts:
-    - family: Noto
+    - family: WDXL
       fonts:
-        - asset: assets/fonts/NotoSansSC-Regular.otf
+        - asset: assets/fonts/WDXLLubrifontSC-Regular.ttf
