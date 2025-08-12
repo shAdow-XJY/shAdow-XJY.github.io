@@ -1,7 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:github_blog/global/videoWidget/mobileVideoWidget.dart';
 import 'package:github_blog/global/videoWidget/videoWidget.dart';
 import 'package:github_blog/global/videoWidget/webviewWidget.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 class VideoCard extends StatefulWidget {
   final String imageUrl;
@@ -23,7 +25,6 @@ class _VideoCardState extends State<VideoCard>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
   late Animation<double> animation;
-
 
   @override
   void initState() {
@@ -50,66 +51,81 @@ class _VideoCardState extends State<VideoCard>
       hoverColor: Colors.transparent,
       focusColor: Colors.transparent,
       highlightColor: Colors.transparent,
-      onTap: (){
+      onTap: () {
         showDialog(
             context: context,
             builder: (context) => //VideoWidget(title: widget.videoName,)
-            Dialog(
-        backgroundColor: const Color(0xFF2E2E48),
-          insetPadding: const EdgeInsets.symmetric(vertical: 20.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(
-                child: const Text(
-                    'Github source',
-                  style: TextStyle(
-                    color: Colors.white,
+                Dialog(
+                  backgroundColor: const Color(0xFF2E2E48),
+                  insetPadding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ResponsiveBuilder(
+                        builder: (context, sizingInformation) {
+                          final isMobile = sizingInformation.deviceScreenType ==
+                              DeviceScreenType.mobile;
+
+                          return TextButton(
+                            child: const Text(
+                              'Github source',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => isMobile
+                                      ? MobileVideoWidget(
+                                          title: widget.videoName,
+                                        )
+                                      : VideoWidget(
+                                          title: widget.videoName,
+                                        ));
+                            },
+                          );
+                        },
+                      ),
+                      TextButton(
+                        child: const Text(
+                          'Youtube source',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          showDialog(
+                              context: context,
+                              builder: (context) => WebviewWidget(
+                                    title: widget.videoName,
+                                    source: 1,
+                                  ));
+                        },
+                      ),
+                      TextButton(
+                        child: const Text(
+                          'Bilibili source',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          showDialog(
+                              context: context,
+                              builder: (context) => WebviewWidget(
+                                    title: widget.videoName,
+                                    source: 2,
+                                  ));
+                        },
+                      ),
+                    ],
                   ),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                  showDialog(
-                      context: context,
-                      builder: (context) => VideoWidget(title: widget.videoName,)
-                  );
-                },
-              ),
-              TextButton(
-                child: const Text(
-                    'Youtube source',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                  showDialog(
-                      context: context,
-                      builder: (context) => WebviewWidget(title: widget.videoName, source: 1,)
-                  );
-                },
-              ),
-              TextButton(
-                child: const Text(
-                  'Bilibili source',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                  showDialog(
-                      context: context,
-                      builder: (context) => WebviewWidget(title: widget.videoName,source: 2,)
-                  );
-                },
-              ),
-            ],
-          ),
-        )
-        );
+                ));
       },
       onHover: (e) {
         if (e) {
@@ -126,7 +142,8 @@ class _VideoCardState extends State<VideoCard>
               child: Container(
                 // width: 240,
                 // height: 350,
-                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                   image: DecorationImage(

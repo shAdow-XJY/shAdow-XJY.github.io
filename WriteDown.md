@@ -89,6 +89,10 @@ A new GitHub web blog done myself with the Flutter.
 ### define assets font
 1. use the local assets fonts in assets if the fonts download online too long
 
+### PC run web，手机局域网访问
+同一网络，查看自己的ip，电脑run运行，手机访问192.168.1.13:8080
+flutter run -d chrome --web-hostname 192.168.1.13 --web-port 8080
+
 ## pack referrence
 1. [sidebarx](https://github.com/Frezyx/sidebarx)
 2. [url_launcher: ^6.1.0](https://pub.dev/packages/url_launcher)
