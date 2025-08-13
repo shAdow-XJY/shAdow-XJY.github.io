@@ -77,7 +77,6 @@ class _WebviewWidgetState extends State<WebviewWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
 
     return ResponsiveBuilder(
       builder: (context, sizingInformation) {
