@@ -34,23 +34,63 @@ class _MobileVideoWidgetState extends State<MobileVideoWidget> {
       }
 
       // 假设 widget.title 是原始的、未编码的标题，例如 "夏日预告企划"
-      String rawFileName = '${widget.title}.mp4';
+      String rawFileName = '${widget.title}.mp4'; // "夏日预告企划.mp4"
 
-      // 对整个文件名进行 URL 组件编码
-      // 这会将中文字符等转换为 %xx 形式
-      String encodedFileName = Uri.encodeComponent(rawFileName);
+      // 第一次编码：将中文等特殊字符转换为 %xx 形式
+      String singleEncodedFileName = Uri.encodeComponent(rawFileName);
+      // singleEncodedFileName 现在是 "%E5%A4%8F%E6%97%A5%E9%A2%84%E5%91%8A%E4%BC%81%E5%88%92.mp4"
 
-      // _constructedVideoUrl 现在应该是类似 'assets/assets/video/%E5%A4%8F%E6%97%A5%E9%A2%84%E5%91%8A%E4%BC%81%E5%88%92.mp4'
-      _constructedVideoUrl = '$videoPathSegment$encodedFileName';
+      // 第二次处理：如果 video_player 的成功 URL 是将第一次编码结果中的 '%' 替换为 '%25'
+      // 那么我们需要手动进行这个替换，或者对 singleEncodedFileName 再次进行某种形式的编码，
+      // 以达到 video_player 使用的 URL 格式。
 
-      print('Constructed video URL for HtmlElementView: $_constructedVideoUrl');
+      // 为了精确匹配 video_player 的行为，如果它真的是将 % 编码为 %25
+      // 这通常意味着对一个已经编码的字符串又做了一次“组件”编码，
+      // 或者更直接地，是对其中的 '%' 字符进行了替换。
+
+      // 尝试模拟 video_player 的双重编码行为
+      // 如果 video_player 的 dataSource 是通过对 singleEncodedFileName 再次 Uri.encodeComponent 得到的
+      // (这很奇怪，但如果它工作了，我们就得尝试)
+      // String doubleEncodedFileName = Uri.encodeComponent(singleEncodedFileName);
+      // 这种做法会将 singleEncodedFileName 中的 % 编码成 %25，. 编码成 %2E 等，可能不是我们想要的。
+
+      // 更可能是 video_player 在某个阶段生成的 URL 字符串就是 %25 开头的。
+      // 如果GitHub Pages服务器上的文件名本身就含有 % (例如文件名是 "%E5%A4%8F...mp4")
+      // 那么对这个文件名字符串进行 Uri.encodeComponent 就会把其中的 % 变成 %25.
+
+      // 让我们基于这样一个假设：服务器上的文件名就是单次编码后的结果，
+      // 即 `docs/assets/assets/video/` 目录下实际的文件名是 `%E5%A4%8F%E6%97%A5%E9%A2%84%E5%91%8A%E4%BC%81%E5%88%92.mp4`
+      // 如果是这种情况，那么 video_player 在使用这个文件名作为路径的一部分时，
+      // 如果它对这个文件名字符串又调用了 Uri.encodeComponent，就会导致 % -> %25。
+
+      // 基于您的观察（video_player 成功的是 %25...），最直接的模拟是：
+      String finalFileNameForRequest;
+      if (isProduction) { // 假设只有生产环境的 video_player URL 是双重编码的
+        // 对单次编码的结果中的每个 '%' 替换为 '%25'
+        // 这是一种强制匹配 video_player 观察到的行为的方式
+        finalFileNameForRequest = singleEncodedFileName.replaceAll('%', '%25');
+      } else {
+        finalFileNameForRequest = singleEncodedFileName; // 开发环境可能不需要双重编码
+      }
+
+      // 或者，如果 video_player 的逻辑是简单地对单次编码的结果再进行一次组件编码：
+      // （再次强调，这对于标准的 URL 编码行为来说是不寻常的，但我们需要匹配工作的东西）
+      // if (isProduction) {
+      //     finalFileNameForRequest = Uri.encodeComponent(singleEncodedFileName);
+      // } else {
+      //     finalFileNameForRequest = singleEncodedFileName;
+      // }
+
+
+      _constructedVideoUrl = '$videoPathSegment$finalFileNameForRequest';
+
+      print('Constructed video URL for HtmlElementView (Attempting double encoding like): $_constructedVideoUrl');
 
     } else {
       _constructedVideoUrl = null;
       print("HtmlElementView is not supported on non-web platforms for video playback here.");
       _isLoading = false;
     }
-
 
     if (kIsWeb && _constructedVideoUrl != null && !_isViewFactoryRegistered) {
       ui.platformViewRegistry.registerViewFactory(_viewType, (int viewId) {
