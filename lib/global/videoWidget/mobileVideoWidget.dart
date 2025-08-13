@@ -32,13 +32,25 @@ class _MobileVideoWidgetState extends State<MobileVideoWidget> {
       } else {
         videoPathSegment = 'assets/video/';
       }
-      _constructedVideoUrl = '$videoPathSegment${Uri.encodeComponent('${widget.title}.mp4')}';
+
+      // 假设 widget.title 是原始的、未编码的标题，例如 "夏日预告企划"
+      String rawFileName = '${widget.title}.mp4';
+
+      // 对整个文件名进行 URL 组件编码
+      // 这会将中文字符等转换为 %xx 形式
+      String encodedFileName = Uri.encodeComponent(rawFileName);
+
+      // _constructedVideoUrl 现在应该是类似 'assets/assets/video/%E5%A4%8F%E6%97%A5%E9%A2%84%E5%91%8A%E4%BC%81%E5%88%92.mp4'
+      _constructedVideoUrl = '$videoPathSegment$encodedFileName';
+
       print('Constructed video URL for HtmlElementView: $_constructedVideoUrl');
+
     } else {
       _constructedVideoUrl = null;
       print("HtmlElementView is not supported on non-web platforms for video playback here.");
-      _isLoading = false; // 非 web 平台，直接标记加载完成（或错误）
+      _isLoading = false;
     }
+
 
     if (kIsWeb && _constructedVideoUrl != null && !_isViewFactoryRegistered) {
       ui.platformViewRegistry.registerViewFactory(_viewType, (int viewId) {
