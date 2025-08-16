@@ -62,51 +62,62 @@ class _IndexPeopleState extends State<IndexPeople> {
 
           const SizedBox(height: 20),
 
-          // 新增列表部分
-          Column(
-            children: progressItems.map((item) {
-              double current = item["current"] as double;
-              double max = item["max"] as double;
-              double value = (max > 0) ? (current / max) : 0.0;
+          // --- 可滚动列表部分 START ---
+          Expanded( // 确保 ListView 有一个有界的高度，以占据剩余的垂直空间
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0), // 给列表项左右内边距
+              itemCount: progressItems.length,
+              itemBuilder: (BuildContext context, int index) { // itemBuilder 的完整签名
+                final item = progressItems[index]; // 获取当前项的数据
+                double current = item["current"] as double;
+                double max = item["max"] as double;
+                double value = (max > 0) ? (current / max) : 0.0;
 
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // 标题 + 数值在同一行
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          item["title"],
-                          style: const TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                // 返回每个列表项的 Widget
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0), // 给每个列表项上下外边距
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // 标题 + 数值在同一行
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // 使用 Flexible 或 Expanded 避免长标题溢出
+                          Flexible(
+                            child: Text(
+                              item["title"],
+                              style: const TextStyle(
+                                fontSize: 24, // 调整字体大小
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                              overflow: TextOverflow.ellipsis, // 标题过长时显示省略号
+                            ),
                           ),
-                        ),
-                        Text(
-                          "${current.toInt()}/${max.toInt()}",
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.white70,
+                          const SizedBox(width: 8), // 给标题和数值之间一些间距
+                          Text(
+                            "${current.toInt()}/${max.toInt()}",
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.white70,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: GradientProgressBar(
-                        value: value,
-                        height: 10,
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              );
-            }).toList(),
+                      const SizedBox(height: 6), // 进度条和上方文本的间距
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(5),
+                        child: GradientProgressBar( // 您的自定义进度条
+                          value: value,
+                          height: 10,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),

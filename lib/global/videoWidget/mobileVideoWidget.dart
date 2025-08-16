@@ -166,10 +166,10 @@ class _MobileVideoWidgetState extends State<MobileVideoWidget> {
         Widget content;
 
         if (!kIsWeb || _constructedVideoUrl == null) {
-          content = Center(
+          content = const Center(
             child: Text(
               kIsWeb ? "Video URL could not be constructed." : "Video playback not supported on this platform.",
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
             ),
           );
@@ -186,13 +186,13 @@ class _MobileVideoWidgetState extends State<MobileVideoWidget> {
                   child: HtmlElementView(viewType: _viewType),
                 ),
               ),
-              if (_isLoading) // 使用新的 _isLoading 状态
-                const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.purple, // 与您的示例一致
-                    // backgroundColor: Colors.purple, // 如果想用背景色
-                  ),
-                ),
+              // if (_isLoading) // 使用新的 _isLoading 状态
+              //   const Center(
+              //     child: CircularProgressIndicator(
+              //       color: Colors.purple, // 与您的示例一致
+              //       // backgroundColor: Colors.purple, // 如果想用背景色
+              //     ),
+              //   ),
             ],
           );
         }
