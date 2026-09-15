@@ -1,57 +1,58 @@
 import 'dart:io';
 
-Future<void> main() async {
-  Set set = {};
-  set.addAll(['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']);
-  set.addAll(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']);
-  var list = await assetDir('write');
-  var list2 = await assetDir('program');
-  var list3 = await assetDir('videoIndex');
-  var list4 = await rootFile(['lib','indexPage','indexHome','indexHome.dart']);
-  var list5 = await rootFile(['lib','indexPage','indexFavorite','indexFavorite.dart']);
-  set.addAll(list);
-  set.addAll(list2);
-  set.addAll(list3);
-  set.addAll(list4);
-  set.addAll(list5);
-  File file = File("local\\fonts\\fontcontent.txt");
-  if(!file.existsSync()){
-    file.create();
-  }
-  await file.writeAsString(set.toString(),mode: FileMode.write);
-}
-Future<List> assetDir(String dirname) async {
-  Set writeSet = {};
-  // writeSet.addAll([1,'d',5]);
-  // print(writeSet);
-
-  //1. create rootDir (assets\\write)
-  Directory dir = Directory("assets\\$dirname");
-
-  //2. search the recursive children dir/file names of rootDir
-  var fileList = await dir.list(recursive: true).toList();
-  var FileList = [];
-  fileList.forEach((element) {
-    writeSet.addAll(element.path.split(''));
-    if(element.runtimeType.toString() == '_File'){
-      FileList.add(element);
+/// Collects string literals across all current Dart sources, not old article paths.
+/// The token match consumes comments before looking for quoted text. Keeping ASCII
+/// also covers dynamic numbers, URLs and keyboard/toolkit labels.
+Set<int> collectFontCodePoints(String source) {
+  final result = <int>{for (var i = 32; i <= 126; i++) i};
+  final tokens = RegExp(
+    r'//[^\n]*|/\*[\s\S]*?\*/'
+    r'|r?"""[\s\S]*?"""'
+    "|r?'''[\\s\\S]*?'''"
+    r'''|r?"(?:\\.|[^"\\])*"'''
+    r"|r?'(?:\\.|[^'\\])*'",
+  );
+  final unicodeEscape =
+      RegExp(r'\\u\{([0-9a-fA-F]+)\}|\\u([0-9a-fA-F]{4})|\\x([0-9a-fA-F]{2})');
+  for (final match in tokens.allMatches(source)) {
+    var value = match.group(0)!;
+    if (value.startsWith('//') || value.startsWith('/*')) continue;
+    if (!value.startsWith('r')) {
+      value = value.replaceAllMapped(
+          unicodeEscape,
+          (m) => String.fromCharCode(
+              int.parse(m.group(1) ?? m.group(2) ?? m.group(3)!, radix: 16)));
     }
-  });
-
-  //read the content of files
-  for(var i=0; i<FileList.length; i++){
-    File file = File(FileList[i].path);
-    var temp = await file.readAsString();
-    writeSet.addAll(temp.split(''));
+    result.addAll(value.runes.where((r) => r >= 32));
   }
-
-  return writeSet.toList();
+  return result;
 }
 
-Future<List> rootFile(List<String> filePath) async {
-  Set writeSet = {};
-  File file = File(filePath.join("\\"));
-  var temp = await file.readAsString();
-  writeSet.addAll(temp.split(''));
-  return writeSet.toList();
+Future<void> main(List<String> arguments) async {
+  final root = Directory.current;
+  final source = Directory('${root.path}/lib');
+  if (!source.existsSync()) {
+    throw StateError('Run from the project root (lib/ is missing).');
+  }
+  final files = source
+      .listSync(recursive: true)
+      .whereType<File>()
+      .where((file) => file.path.endsWith('.dart'))
+      .toList()
+    ..sort((a, b) => a.path.compareTo(b.path));
+  final points = <int>{};
+  for (final file in files) {
+    points.addAll(collectFontCodePoints(await file.readAsString()));
+  }
+  // Optional extra characters for text that is supplied outside Dart literals.
+  final extra = File('${root.path}/local/fonts/extra-characters.txt');
+  if (extra.existsSync()) {
+    points.addAll((await extra.readAsString()).runes.where((r) => r >= 32));
+  }
+  final ordered = points.toList()..sort();
+  final output = File('${root.path}/local/fonts/fontcontent.txt');
+  await output.parent.create(recursive: true);
+  await output.writeAsString(String.fromCharCodes(ordered));
+  stdout.writeln(
+      '${files.length} Dart files; ${ordered.length} characters → ${output.path}');
 }

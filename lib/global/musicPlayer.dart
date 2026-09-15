@@ -1,164 +1,95 @@
-import 'dart:async';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_builder/responsive_builder.dart';
-import 'blurGlass.dart';
+import 'siteStyle.dart';
 
 class MusicPlayer extends StatefulWidget {
-  const MusicPlayer({
-    Key? key,
-  }) : super(key: key);
-
+  const MusicPlayer({Key? key}) : super(key: key);
   @override
-  _MusicPlayerState createState() => _MusicPlayerState();
+  State<MusicPlayer> createState() => _MusicPlayerState();
 }
 
-class _MusicPlayerState extends State<MusicPlayer> with TickerProviderStateMixin{
-  //music widget anim
-  late AnimationController controller;
-  late Animation<Offset> animation;
-  int _count = 0;
+class _MusicPlayerState extends State<MusicPlayer> {
+  final _player = AssetsAudioPlayer();
+  bool _busy = false;
+  bool _opened = false;
 
-  //audio
-  bool isPlaying = false;
-  final AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer();
-
-  void animInit(){
-    controller = AnimationController(duration: const Duration(seconds: 2), vsync: this,);
-    animation = Tween(begin: const Offset(0.67, 0), end: Offset.zero).animate(controller);
-  }
-
-  void musicPlayerInit(){
-    assetsAudioPlayer.open(
-        Playlist(
-            audios: [
-              Audio("assets/music/KoheiTanaka_BeyondtheHappyEnd.mp3"),
-              Audio("assets/music/KoheiTanaka_FleetingFragmentofMemory.mp3"),
-              Audio("assets/music/KoheiTanaka_Ifyouarewithyou.mp3"),
-              Audio("assets/music/KoheiTanaka_Smallguide.mp3"),
-            ]
-        ),
-        loopMode: LoopMode.playlist //loop the full playlist
-    );
-  }
-
-  void songOperator(int num){
-    //0 :pause or play
-    //1 :pre song
-    //2 :next song
-    if(assetsAudioPlayer.playlist == null){
-      musicPlayerInit();
-      debugPrint("init");
-    }else{
-      switch (num){
-        case 0:{assetsAudioPlayer.playOrPause();}
-          break;
-        case 1:{assetsAudioPlayer.previous();}
-          break;
-        case 2:{assetsAudioPlayer.next();}
-          break;
-        default : break;
+  Future<void> _operate(int command) async {
+    if (_busy) return;
+    setState(() => _busy = true);
+    try {
+      if (!_opened) {
+        await _player.open(
+            Playlist(
+                startIndex: command == 1 ? 3 : (command == 2 ? 1 : 0),
+                audios: [
+                  Audio('assets/music/KoheiTanaka_BeyondtheHappyEnd.mp3'),
+                  Audio(
+                      'assets/music/KoheiTanaka_FleetingFragmentofMemory.mp3'),
+                  Audio('assets/music/KoheiTanaka_Ifyouarewithyou.mp3'),
+                  Audio('assets/music/KoheiTanaka_Smallguide.mp3'),
+                ]),
+            loopMode: LoopMode.playlist,
+            autoStart: true);
+        _opened = true;
+      } else if (command == 0) {
+        await _player.playOrPause();
+      } else if (command == 1) {
+        await _player.previous();
+      } else {
+        await _player.next();
       }
+    } catch (_) {
+      _opened = false;
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: const Text('Music could not play. Please try again.'),
+            action: SnackBarAction(
+                label: 'Retry', onPressed: () => _operate(command))));
+      }
+    } finally {
+      if (mounted) setState(() => _busy = false);
     }
-  }
-
-  Row returnButtonList(){
-    return Row(
-      children: [
-        IconButton(
-          icon: Icon(isPlaying?Icons.pause_circle:Icons.play_arrow),
-          color: Colors.white,
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          onPressed: () {
-            songOperator(0);
-            setState(() {
-              isPlaying = !isPlaying;
-            });
-          },
-        ),
-        IconButton(
-          icon: const Icon(Icons.skip_previous),
-          color: Colors.white,
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          onPressed: () {
-            songOperator(1);
-            setState(() {
-              isPlaying = true;
-            });
-          },
-        ),
-        IconButton(
-          icon: const Icon(Icons.skip_next),
-          color: Colors.white,
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          onPressed: () {
-            songOperator(2);
-            setState(() {
-              isPlaying = true;
-            });
-          },
-        ),
-      ],
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    animInit();
   }
 
   @override
   void dispose() {
-    controller.dispose();
-    assetsAudioPlayer.dispose();
+    _player.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) {
-    return ResponsiveBuilder(
-        builder: (context, sizingInformation) {
-          if (sizingInformation.deviceScreenType == DeviceScreenType.mobile) {
-            return returnButtonList();
-          }
-          return MouseRegion(
-            onEnter: (event){
-              if(controller.isDismissed){
-                Timer.periodic(const Duration(milliseconds: 1000), (t) {
-                  _count++;
-                  if (_count == 1) {
-                    controller.forward();
-                    _count = 0;
-                    t.cancel(); // 定时器内部触发销毁
-                  }
-                });
-              }else if(controller.isAnimating){
-                controller.forward();
-              }
-            },
-            onExit: (event){
-              controller.reverse();
-            },
-            cursor: SystemMouseCursors.click,
-            opaque: false,
-            child: SlideTransition(
-              position: animation,
-              child: BlurGlass(
-                marginValue: 3.0,
-                paddingValue: 5.0,
-                child: returnButtonList(),
-              ),
+  Widget build(BuildContext context) => StreamBuilder<bool>(
+      stream: _player.isPlaying,
+      initialData: _player.isPlaying.value,
+      builder: (context, snapshot) => SizedBox(
+          width: 132,
+          child: Row(children: [
+            _button(snapshot.data == true ? 'Pause music' : 'Play music',
+                snapshot.data == true ? Icons.pause : Icons.play_arrow, 0,
+                primary: true),
+            _button('Previous track', Icons.skip_previous, 1),
+            _button('Next track', Icons.skip_next, 2),
+          ])));
 
-            ),
-
-          );
-        }
-    );
-
-  }
+  Widget _button(String label, IconData icon, int command,
+          {bool primary = false}) =>
+      SizedBox(
+          width: 44,
+          height: 44,
+          child: IconButton(
+              tooltip: label,
+              onPressed: _busy ? null : () => _operate(command),
+              style: IconButton.styleFrom(
+                  foregroundColor: primary
+                      ? const Color(0xFFB69AFF)
+                      : const Color(0xFFE7E2FA)),
+              icon: _busy && primary
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: siteAccent,
+                          semanticsLabel: 'Loading music'))
+                  : Icon(icon, size: primary ? 26 : 21)));
 }
-

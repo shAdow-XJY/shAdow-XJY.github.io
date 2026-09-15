@@ -46,3 +46,6 @@ app.*.map.json
 
 /localAsset/
 /local/
+
+# Generated font inputs, full source fonts, logs and local design checks belong in local/.
+# Project documentation is limited to README.md and CMD_README.md.

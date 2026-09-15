@@ -1,71 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:github_blog/global/videoWidget/videoCard.dart';
-import 'package:responsive_builder/responsive_builder.dart';
-
+import '../../global/videoWidget/videoCard.dart';
 import '../../innerAssets/videoAsset/videoData.dart';
 
-class IndexVideo extends StatefulWidget {
+class IndexVideo extends StatelessWidget {
   const IndexVideo({Key? key}) : super(key: key);
-
   @override
-  _IndexVideoState createState() => _IndexVideoState();
-}
-
-class _IndexVideoState extends State<IndexVideo> {
-  List<String> videoTitles = [];
-
-  int crossAxisCount = 5;
-
-  @override
-  void initState() {
-    super.initState();
-    videoTitles = VideoData.videoData.keys.toList();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: theme.canvasColor,
-          boxShadow: const [BoxShadow()],
-        ),
-        margin: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 10.0),
-        padding: const EdgeInsets.all(5.0),
-        child: ResponsiveBuilder(
-        builder: (context, sizingInformation){
-          if (sizingInformation.deviceScreenType == DeviceScreenType.mobile){
-            crossAxisCount = 1;
-          }else if(sizingInformation.deviceScreenType == DeviceScreenType.tablet){
-            crossAxisCount = 3;
-          }
-            return GridView.builder(
-              itemCount: videoTitles.length,
-              //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  //横轴元素个数
-                  crossAxisCount: crossAxisCount,
-                  //纵轴间距
-                  mainAxisSpacing: 5.0,
-                  //横轴间距
-                  crossAxisSpacing: 10.0,
-                  //子组件宽高长度比例
-                  childAspectRatio: 0.9),
-              itemBuilder: (BuildContext context, int index) {
-                //Widget Function(BuildContext context, int index)
-                return VideoCard(
-                  imageUrl: 'assets/image/video/${videoTitles[index]}.png',
-                  videoName: videoTitles[index],
-                  videoDescription: 'click to watch',
-                );
-              });
-        })
-    );
-  }
+  Widget build(BuildContext context) =>
+      LayoutBuilder(builder: (context, constraints) {
+        final titles = VideoData.videoData.keys.toList();
+        final compact = constraints.maxWidth < 600;
+        Widget card(int index) => VideoCard(
+            compact: compact,
+            imageUrl: 'assets/image/video/${titles[index]}.png',
+            videoName: titles[index],
+            videoDescription: 'Choose a video source');
+        if (compact) {
+          return ListView.separated(
+              padding: const EdgeInsets.all(16),
+              itemCount: titles.length,
+              separatorBuilder: (_, __) => const SizedBox(height: 8),
+              itemBuilder: (_, index) => card(index));
+        }
+        return GridView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: titles.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount:
+                    (constraints.maxWidth / 260).floor().clamp(2, 5),
+                mainAxisSpacing: 8,
+                crossAxisSpacing: 8,
+                childAspectRatio: .9),
+            itemBuilder: (_, index) => card(index));
+      });
 }

@@ -1,1 +1,0 @@
-pyftsubset "NotoSansSC-Regular.otf" --text-file="fontcontent.txt" --output-file="E:/Android Studio Projects/github_blog/assets/fonts/NotoSansSC-Regular.otf"

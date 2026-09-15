@@ -39,11 +39,13 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/fonts/WDXL_LICENSE.txt
+    - assets/fonts/site/Roboto_LICENSE.txt
     - assets/image/
     - assets/image/video/
     - assets/image/favorite/
-    - assets/image/program/
-    - assets/image/book/
+    - assets/image/collections/
+    - assets/image/book/redesign/
 
 
     - assets/icon/
@@ -57,3 +59,7 @@ flutter:
     - family: WDXL
       fonts:
         - asset: assets/fonts/WDXLLubrifontSC-Regular.ttf
+
+    - family: SiteBody
+      fonts:
+        - asset: assets/fonts/site/Roboto-Regular.ttf

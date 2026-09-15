@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import '../siteStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:github_blog/global/videoWidget/mobileVideoWidget.dart';
 import 'package:github_blog/global/videoWidget/videoWidget.dart';
@@ -6,12 +7,14 @@ import 'package:github_blog/global/videoWidget/webviewWidget.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class VideoCard extends StatefulWidget {
+  final bool compact;
   final String imageUrl;
   final String videoName;
   final String videoDescription;
 
   const VideoCard({
     Key? key,
+    this.compact = false,
     required this.imageUrl,
     required this.videoName,
     required this.videoDescription,
@@ -49,7 +52,7 @@ class _VideoCardState extends State<VideoCard>
   Widget build(BuildContext context) {
     return InkWell(
       hoverColor: Colors.transparent,
-      focusColor: Colors.transparent,
+      focusColor: siteAccent.withValues(alpha: .3),
       highlightColor: Colors.transparent,
       onTap: () {
         showDialog(
@@ -128,83 +131,110 @@ class _VideoCardState extends State<VideoCard>
                 ));
       },
       onHover: (e) {
+        if (widget.compact || MediaQuery.of(context).disableAnimations) return;
         if (e) {
           controller.forward();
         } else {
           controller.reverse();
         }
       },
-      child: AnimatedBuilder(
-          animation: animation,
-          builder: (context, _) {
-            return Transform.scale(
-              scale: 1 + (0.2 * animation.value),
-              child: Container(
-                // width: 240,
-                // height: 350,
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  image: DecorationImage(
-                    image: AssetImage(widget.imageUrl),
-                    fit: BoxFit.cover,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 50 * animation.value,
-                        spreadRadius: -10,
-                        offset: const Offset(0, 10))
-                  ],
-                ),
-                child: Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          begin: Alignment.bottomLeft,
-                          end: Alignment.topCenter,
-                          colors: [
-                            Colors.black,
-                            Colors.black12,
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
+      child: widget.compact
+          ? Container(
+              padding: const EdgeInsets.all(12),
+              decoration: const BoxDecoration(
+                  color: siteSurface,
+                  border: Border(bottom: BorderSide(color: siteDivider))),
+              child: Row(children: [
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(widget.imageUrl,
+                        width: 96, height: 64, fit: BoxFit.cover)),
+                const SizedBox(width: 16),
+                Expanded(
+                    child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AutoSizeText(
-                            widget.videoName,
-                            minFontSize: 0,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
-                            maxLines: 2,
-                          ),
-                          AutoSizeText(
-                            widget.videoDescription,
-                            maxLines: 3,
-                            minFontSize: 0,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
+                      Text(widget.videoName,
+                          style: siteHeading.copyWith(fontSize: 18)),
+                      const SizedBox(height: 4),
+                      Text('Choose a video source',
+                          style: siteBody.copyWith(fontSize: 12)),
+                    ])),
+                const SizedBox(width: 8),
+                const Icon(Icons.play_circle_outline, color: siteMuted),
+              ]),
+            )
+          : AnimatedBuilder(
+              animation: animation,
+              builder: (context, _) {
+                return Transform.scale(
+                  scale: 1 + (0.015 * animation.value),
+                  child: Container(
+                    // width: 240,
+                    // height: 350,
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 30),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      image: DecorationImage(
+                        image: AssetImage(widget.imageUrl),
+                        fit: BoxFit.cover,
                       ),
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: 50 * animation.value,
+                            spreadRadius: -10,
+                            offset: const Offset(0, 10))
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            );
-          }),
+                    child: Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              begin: Alignment.bottomLeft,
+                              end: Alignment.topCenter,
+                              colors: [
+                                Colors.black,
+                                Colors.black12,
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AutoSizeText(
+                                widget.videoName,
+                                minFontSize: 0,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
+                                maxLines: 2,
+                              ),
+                              AutoSizeText(
+                                widget.videoDescription,
+                                maxLines: 3,
+                                minFontSize: 0,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
     );
   }
 }
