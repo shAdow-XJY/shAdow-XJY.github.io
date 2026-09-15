@@ -9,7 +9,7 @@ void main() {
     final used = <String>{
       ...websiteProjects.map((p) => p.image),
       ...collectionEntries.map((p) => p.image),
-      ...VideoData.videoData.keys.map((name) => 'assets/image/video/$name.png'),
+      ...videos.map((video) => video.cover),
     };
     final pattern =
         RegExp(r'''assets/(?:image|icon)/[^'"\s]+\.(?:png|jpg|webp)''');

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:github_blog/router/router.dart';
 
-void main() async{
+void main() async {
   runApp(const MyApp());
 }
 
@@ -11,8 +11,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return
-      MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'shAdowPlusing',
       theme: ThemeData(
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
         canvasColor: canvasColor,
         scaffoldBackgroundColor: scaffoldBackgroundColor,
       ),
-      initialRoute: '/homePage', //初始化加载的路由
+      onGenerateInitialRoutes: initialRoutes,
       onGenerateRoute: onGenerateRoute,
     );
   }

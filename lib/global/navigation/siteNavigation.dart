@@ -41,6 +41,12 @@ class _SiteNavigationState extends State<SiteNavigation> {
   bool? _expanded;
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    precacheImage(const AssetImage('assets/image/avatar.jpg'), context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final expanded = widget.drawer || (_expanded ?? widget.wide);
     final width = widget.drawer ? 248.0 : (widget.wide ? 152.0 : 220.0);
@@ -74,55 +80,75 @@ class _SiteNavigationState extends State<SiteNavigation> {
             key: const PageStorageKey('navigation-scroll'),
             child: Padding(
                 padding: const EdgeInsets.only(top: 20),
-                child: Column(
-                    children: List.generate(siteSections.length, (index) {
-                  final selected = index == widget.selectedIndex;
-                  return Semantics(
-                      selected: selected,
-                      child: Tooltip(
-                        message: expanded ? '' : siteSections[index],
-                        child: Material(
-                          color: selected ? siteSelected : Colors.transparent,
-                          child: InkWell(
-                            key: ValueKey('nav-$index'),
-                            onTap: () => widget.onSelected(index),
-                            focusColor: siteAccent.withValues(alpha: .3),
-                            hoverColor: siteAccent.withValues(alpha: .12),
-                            child: Container(
-                              height: 64,
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      left: BorderSide(
-                                          color: selected
-                                              ? siteAccent
-                                              : Colors.transparent,
-                                          width: 4))),
-                              child: OverflowBox(
-                                  alignment: Alignment.centerLeft,
-                                  minWidth: width - 4,
-                                  maxWidth: width - 4,
-                                  child: Row(children: [
-                                    SizedBox(
-                                        width: 64,
-                                        child: Icon(_icons[index],
-                                            size: 24,
+                child: Column(children: [
+                  Center(
+                      child: AnimatedContainer(
+                    key: const ValueKey('navigation-avatar'),
+                    duration: reducedMotion
+                        ? Duration.zero
+                        : const Duration(milliseconds: 180),
+                    curve: Curves.easeOutCubic,
+                    width: expanded ? 88 : 40,
+                    height: expanded ? 88 : 40,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(expanded ? 0 : 20)),
+                    child: Image.asset('assets/image/avatar.jpg',
+                        fit: BoxFit.cover,
+                        semanticLabel: 'ShadowPlusing avatar'),
+                  )),
+                  const SizedBox(height: 20),
+                  ...List.generate(siteSections.length, (index) {
+                    final selected = index == widget.selectedIndex;
+                    return Semantics(
+                        selected: selected,
+                        child: Tooltip(
+                          message: expanded ? '' : siteSections[index],
+                          child: Material(
+                            color: selected ? siteSelected : Colors.transparent,
+                            child: InkWell(
+                              key: ValueKey('nav-$index'),
+                              onTap: () => widget.onSelected(index),
+                              focusColor: siteAccent.withValues(alpha: .3),
+                              hoverColor: siteAccent.withValues(alpha: .12),
+                              child: Container(
+                                height: 64,
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        left: BorderSide(
                                             color: selected
-                                                ? const Color(0xFFB69AFF)
-                                                : const Color(0xFFE7E2FA))),
-                                    Expanded(
-                                        child: ExcludeSemantics(
-                                            excluding: !expanded,
-                                            child: Opacity(
-                                                opacity: expanded ? 1 : 0,
-                                                child: Text(siteSections[index],
-                                                    style: siteHeading.copyWith(
-                                                        fontSize: 16))))),
-                                  ])),
+                                                ? siteAccent
+                                                : Colors.transparent,
+                                            width: 4))),
+                                child: OverflowBox(
+                                    alignment: Alignment.centerLeft,
+                                    minWidth: width - 4,
+                                    maxWidth: width - 4,
+                                    child: Row(children: [
+                                      SizedBox(
+                                          width: 64,
+                                          child: Icon(_icons[index],
+                                              size: 24,
+                                              color: selected
+                                                  ? const Color(0xFFB69AFF)
+                                                  : const Color(0xFFE7E2FA))),
+                                      Expanded(
+                                          child: ExcludeSemantics(
+                                              excluding: !expanded,
+                                              child: Opacity(
+                                                  opacity: expanded ? 1 : 0,
+                                                  child: Text(
+                                                      siteSections[index],
+                                                      style:
+                                                          siteHeading.copyWith(
+                                                              fontSize: 16))))),
+                                    ])),
+                              ),
                             ),
                           ),
-                        ),
-                      ));
-                }))),
+                        ));
+                  })
+                ])),
           )),
           if (!widget.drawer)
             SizedBox(
