@@ -2,6 +2,18 @@ import 'package:flutter/material.dart';
 import '../homepage/homePage.dart';
 import '../innerAssets/videoAsset/videoData.dart';
 
+// The watch view repeats the site shell. Keep both shells stationary when
+// entering/leaving it, rather than sliding the toolbar and navigation together.
+Route<dynamic> _videoRoute({
+  required RouteSettings settings,
+  required WidgetBuilder builder,
+}) => PageRouteBuilder<dynamic>(
+  settings: settings,
+  transitionDuration: Duration.zero,
+  reverseTransitionDuration: Duration.zero,
+  pageBuilder: (context, animation, secondaryAnimation) => builder(context),
+);
+
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
   final uri = Uri.tryParse(settings.name ?? '/');
   final parts = uri?.pathSegments ?? [];
@@ -9,7 +21,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       ? videoById(parts.last)
       : null;
   if (video != null) {
-    return MaterialPageRoute(
+    return _videoRoute(
       settings: settings,
       builder: (_) => HomePage(video: video),
     );
@@ -35,7 +47,7 @@ List<Route<dynamic>> initialRoutes(String name) {
         settings: const RouteSettings(name: '/homePage'),
         builder: (_) => HomePage(key: homeKey, initialSection: 1),
       ),
-      MaterialPageRoute(
+      _videoRoute(
         settings: RouteSettings(name: name),
         builder: (_) => HomePage(
           video: video,

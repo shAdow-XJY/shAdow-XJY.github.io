@@ -12,11 +12,13 @@
 
 ```sh
 flutter pub get
-flutter build web --no-pub --no-web-resources-cdn --release --pwa-strategy=none
+flutter build web --no-pub --no-web-resources-cdn --release --no-wasm-dry-run
 python3 tool/preview_web.py --port 8765
 ```
 
-打开 [本地预览](http://127.0.0.1:8765/)。`build/web/` 是构建输出；`docs/` 是历史发布产物，按维护约定保留，不能代表当前源码效果。
+打开 [本地预览](http://127.0.0.1:8765/)。`build/web/` 是构建输出；`docs/` 是 Pages 发布目录，只有显式同步后才代表当前源码。本轮音乐与视频过渡修复已同步发布产物，尚未推送上线。
+
+2026-10-03 音乐修复使用本机 Flutter 3.47.6 / Dart 3.13.5，先执行 `flutter pub get` 刷新 SDK 固定依赖。此版本已移除 `--pwa-strategy` 参数，上方命令用于当前 SDK；Flutter 3.35.7 的历史命令见 CMD_README。
 
 ## 结构与内容维护
 
@@ -53,6 +55,7 @@ python3 tool/preview_web.py --port 8765
 - 视频列表在桌面为16:9封面卡片、手机为紧凑列表；点击直接进入独立播放视图，返回保留列表位置与焦点。
 - 站内视频统一使用原生 HTML 控制条，支持播放、暂停、进度、音量与浏览器全屏；加载失败有重试和换源。嵌入来源保留原站入口。
 - 进入播放视图暂停本站背景音乐，返回不自动恢复；换源和退出会释放旧媒体元素与订阅。
+- 视频播放页进出不使用整页推入/退出动画，顶部栏和侧栏保持原位；直达链接和浏览器返回仍保留。
 - 原中文视频改名为 `assets/video/summer-preview.mp4`，避免构建输出文件名编码差异；不要恢复按 debug/release 猜测编码次数的分支。
 
 ## 后续优化边界

@@ -1,6 +1,17 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'siteStyle.dart';
+
+// Resolve against the deployment directory, discarding the hash route/query.
+// The plugin's asset resolver concatenates window.location.href and corrupts
+// the host on /#/homePage. Network sources bypass that resolver on Web.
+Uri musicAssetUrl(Uri base, String asset) =>
+    base.resolveUri(Uri(path: 'assets/$asset'));
+
+Audio _musicAudio(String asset) => kIsWeb
+    ? Audio.network(musicAssetUrl(Uri.base, asset).toString())
+    : Audio(asset);
 
 class MusicPlayer extends StatefulWidget {
   const MusicPlayer({Key? key, this.enabled = true}) : super(key: key);
@@ -37,10 +48,12 @@ class MusicPlayerState extends State<MusicPlayer> {
           Playlist(
             startIndex: command == 1 ? 3 : (command == 2 ? 1 : 0),
             audios: [
-              Audio('assets/music/KoheiTanaka_BeyondtheHappyEnd.mp3'),
-              Audio('assets/music/KoheiTanaka_FleetingFragmentofMemory.mp3'),
-              Audio('assets/music/KoheiTanaka_Ifyouarewithyou.mp3'),
-              Audio('assets/music/KoheiTanaka_Smallguide.mp3'),
+              _musicAudio('assets/music/KoheiTanaka_BeyondtheHappyEnd.mp3'),
+              _musicAudio(
+                'assets/music/KoheiTanaka_FleetingFragmentofMemory.mp3',
+              ),
+              _musicAudio('assets/music/KoheiTanaka_Ifyouarewithyou.mp3'),
+              _musicAudio('assets/music/KoheiTanaka_Smallguide.mp3'),
             ],
           ),
           loopMode: LoopMode.playlist,

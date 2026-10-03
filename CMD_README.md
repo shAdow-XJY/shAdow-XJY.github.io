@@ -4,6 +4,23 @@
 
 ## 1. 恢复依赖与开发
 
+### 2026-10-03 音乐修复
+
+- 线上控制台复现音频请求到 `https://shadowplusing.websitehomepage/assets/assets/music/KoheiTanaka_BeyondtheHappyEnd.mp3`，报 `ERR_CONNECTION_CLOSED`。发布的 `main.dart.js` 与本地 `docs/main.dart.js` SHA-256 一致；插件使用 `window.location.href.replaceAll('/#/', '')` 拼接资源，导致路由污染域名。
+- `lib/global/musicPlayer.dart` 在 Web 中以 `Uri.resolveUri` 解析部署目录下的同站 MP3，并用 `Audio.network` 绕过插件的 asset 地址拼接。原生平台继续使用 `Audio(asset)`。回归用例覆盖根目录、子目录、首页和视频 hash 路由，以及带 query 的 index.html。
+- 本机 SDK 现为 Flutter 3.47.6 / Dart 3.13.5；旧 `.dart_tool/package_config.json` 无法直接配合新 SDK。先执行 `flutter pub get`，锁文件只更新 SDK 强制固定的六项基础依赖。此版本已移除 `--pwa-strategy`；当前构建命令如下，后文 3.35.7 命令保留为历史记录。
+
+```sh
+flutter pub get
+flutter test --no-pub test/music_test.dart test/video_test.dart test/navigation_test.dart
+flutter build web --no-pub --no-web-resources-cdn --release --no-wasm-dry-run
+python3 tool/preview_web.py --port 8766
+```
+
+音乐 URL 的回归测试及相邻视频、导航测试通过。针对音乐文件的静态分析无 error/warning；原有缺少 if 花括号的 info 仍保留。Edge release 实测四首音乐加载、播放、暂停、换曲，以及进入视频暂停音乐、返回不自动恢复。发布仍按第4节整包更新 `docs/` 后提交/推送。
+
+同轮修复视频页面整页移动：`router.dart` 的视频路由改用零进出过渡，保留URL及返回栈。新增回归在 iOS 默认滑动过渡平台下检查进入和退出中途顶部栏、头像位置不变，并核对普通打开与深链接的路由时长。合并音乐、视频、导航回归共13项通过。
+
 ```sh
 flutter --version
 flutter pub get

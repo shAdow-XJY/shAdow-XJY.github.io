@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:github_blog/global/videoWidget/videoSurface.dart';
 import 'package:github_blog/indexPage/indexVideo/indexVideo.dart';
@@ -8,6 +9,51 @@ import 'package:github_blog/router/router.dart';
 import 'package:github_blog/homepage/homePage.dart';
 
 void main() {
+  testWidgets('Opening and closing video keeps the site shell stationary', (
+    tester,
+  ) async {
+    // Use the site's font metrics rather than the test font's wide glyphs.
+    for (final font in {
+      'WDXL': 'assets/fonts/WDXLLubrifontSC-Regular.ttf',
+      'SiteBody': 'assets/fonts/site/Roboto-Regular.ttf',
+    }.entries) {
+      final loader = FontLoader(font.key)..addFont(rootBundle.load(font.value));
+      await loader.load();
+    }
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(1280, 900);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(
+      MaterialApp(
+        // Exercise the platform whose default page transition slides sideways.
+        theme: ThemeData(platform: TargetPlatform.iOS),
+        initialRoute: '/videos',
+        onGenerateInitialRoutes: initialRoutes,
+        onGenerateRoute: onGenerateRoute,
+      ),
+    );
+    await tester.pumpAndSettle();
+    final toolbar = find.byType(NavigationToolbar);
+    final toolbarPosition = tester.getTopLeft(toolbar);
+    final avatar = find.byKey(const ValueKey('navigation-avatar'));
+    final avatarPosition = tester.getTopLeft(avatar);
+    await tester.tap(find.byKey(const ValueKey('video-summer-preview')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 75));
+    expect(find.byType(VideoWatch), findsOneWidget);
+    expect(tester.getTopLeft(toolbar), toolbarPosition);
+    expect(tester.getTopLeft(avatar), avatarPosition);
+    await tester.ensureVisible(find.byKey(const ValueKey('back-to-videos')));
+    await tester.tap(find.byKey(const ValueKey('back-to-videos')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 75));
+    expect(find.byType(VideoWatch), findsNothing);
+    expect(tester.getTopLeft(toolbar), toolbarPosition);
+    expect(tester.getTopLeft(avatar), avatarPosition);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('Selecting a mobile drawer section exits the watch route', (
     tester,
   ) async {
@@ -168,6 +214,14 @@ void main() {
       final routes = initialRoutes('/videos/summer-preview');
       expect(routes.length, 2);
       expect(routes.last.settings.name, '/videos/summer-preview');
+      final watchRoute = routes.last as PageRoute;
+      expect(watchRoute.transitionDuration, Duration.zero);
+      expect(watchRoute.reverseTransitionDuration, Duration.zero);
+      final pushedRoute =
+          onGenerateRoute(const RouteSettings(name: '/videos/summer-preview'))
+              as PageRoute;
+      expect(pushedRoute.transitionDuration, Duration.zero);
+      expect(pushedRoute.reverseTransitionDuration, Duration.zero);
       expect(initialRoutes('/videos/unknown').length, 1);
     },
   );
